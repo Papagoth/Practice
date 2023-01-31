@@ -1,0 +1,246 @@
+
+.header-margin{
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+.header-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+body {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    background: #888888;
+}
+
+.ssilka {
+    color: white;
+    text-decoration: none;
+    transition: color 0.5s
+}
+.ssilka:hover{
+    color: black;
+}
+.nav_roboto
+{
+    font-family: 'Roboto', sans-serif;
+}
+.roboto{
+    font-family: 'Roboto', sans-serif;
+}
+.li-nav{
+    width: 150px;
+    display: inline-block;
+}
+.size2{
+    padding:0 50px;
+    margin-bottom:10px;
+}
+footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 50px;
+    background: #222222;
+}
+.title_color{
+    background: #555555 ;
+
+}
+.nav_color
+{
+    position: sticky;
+    top: 0;
+    border-radius:0 0 20px 20px;
+    background: #555555;
+}
+.size1{
+    width: 1440px ;
+    background: #999999;
+}
+.lato{
+    font-family: 'Lato', sans-serif;
+}
+.header-import{
+    display: flex;
+}
+.left1{
+    margin-left: 120px;
+    align-self: center;
+}
+#contacts{
+    margin-top: 0;
+}
+.code-background{
+    background: #222222;
+}
+#code{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.pre-none{ margin-top: 0;
+    margin-bottom: 0;}
+#education{ margin-top: 0}
+
+table {
+    width: 500px; /* Ширина таблицы */
+    /* border: 1px solid green; Рамка вокруг таблицы */
+    /* margin: auto; /* Выравниваем таблицу по центру окна  */
+    margin: auto;
+
+}
+td {
+    text-align: center; /* Выравниваем текст по центру ячейки */
+}
+.indent
+{
+    padding: 0;
+    margin:10px 0;
+}
+.photo{
+    width: 400px;
+    height: 300px;
+    padding:0 25px;
+}
+
+.image_indent
+{
+    padding:0 25px;
+}
+.image_center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.spec_table
+{
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+table{
+    border-style:solid;
+    border-color: black;
+    border-collapse: collapse;
+}
+td{
+    border-style:solid;
+    border-color: black;
+}
+th{
+    border-style:solid;
+    border-color: black;
+}
+.dropbtn {
+    font-family: 'Roboto', sans-serif;
+    background-color: #555555;
+    color: white;
+    padding:10px 0;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: color 0.5s
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #999999;
+    min-width: 300px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 20px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #999999;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {color: black}
+
+
+
+
+
+.c-button {
+    appearance: none;
+    border: 0;
+    border-radius: 15px;
+    background:#fff;
+    color: black;
+    padding: 8px 16px;
+    font-size: 15px;
+}
+.border_rad
+{
+    border-radius: 20px;
+}
+.rad{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+/* Позиционируем палитру так, чтобы она располагалась в правом верхнем углу страницы */
+.color-panel {
+    position: absolute; /* задаем абсолютное позиционирование */
+    top: 0px; /* прижимаем палитру к верхней части страницы  */
+    right: 10px; /* создаем внешний отступ справа */
+    background-color: #fff;
+    height: 60px;
+    padding: 15px 5px 5px 5px; /* задаем внутренние отступы */
+    -webkit-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35); /* добавим тень*/
+    -moz-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
+    box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.35);
+    border-radius: 0px 0px 30px 30px; /* закруглим края панели */
+}
+
+/* Зададим размеры ячейкам таблицы, закруглим их и прижмем к левому краю панели */
+.color-panel div {
+    height: 50px;
+    width: 50px;
+    border-radius: 30px;
+    float:left;
+    margin: 5px;
+}
+
+/* Для каждого блока с «цветным» идентификатором зададим соответствующий названию цвет фона */
+#blue{
+    background-color: #b3e5fc;
+}
+#red{
+    background-color: #ffcdd2;
+}
+#green{
+    background-color: #c5e1a5;
+}
+#orange{
+    background-color: #ffcc80;
+}
+#grey
+{
+    background-color: #888888;
+}
