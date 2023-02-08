@@ -48,8 +48,8 @@ public class AddTeacherController {
     @PostMapping(StringConstant.SLADDTEACHER)
     public ResponseEntity<String> addTeacher(@RequestBody Teacher teacher) {
         try {
-            System.out.println(teacher);
-            // teacherService.save(teacher);
+            //System.out.println(teacher);
+            teacherService.save(teacher);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

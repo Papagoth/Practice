@@ -87,11 +87,13 @@ public class Teacher {
 
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (Exception e) {
-            return "";
-        }
+        return "{" +
+                "\"id\":" + id +
+                ",\" fio\":" + fio + '\"' +
+                ", \"borndate\":" + borndate + '\"' +
+                ", \"subjects\":" + subjects +
+                ",\" speciality\":" + speciality + '\"' +
+                '}';
     }
 
     public String parseIntoString() {

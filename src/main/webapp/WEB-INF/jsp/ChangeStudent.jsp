@@ -23,7 +23,7 @@
         function show_student() {
             $.get('/change_student/' + document.getElementById("input_id").value, function (data) {
                 $("#fio").val(data.fio);
-                $("#borndata").val(data.borndata);
+                $("#datepicker").val(data.borndata);
                 $("#sticket").val(data.sticket);
                 console.log(JSON.stringify(data.party));
                 $('#party').prepend('<option value=' + JSON.stringify(data.party) + '>' + data.party.name + '</option>');
@@ -113,7 +113,7 @@
     <div class="size2">
         <form id="StudentForm">
             <div><input type='text' name='fio' id='fio'/></div>
-            <div><input type='text' name='borndata' id='borndata'/></div>
+            <div><input type='text' name='datepicker' id='datepicker'/></div>
             <div><input type='number' name='sticket' id='sticket'/></div>
             <span id="span_name"></span>
             <select name="party" id="party">

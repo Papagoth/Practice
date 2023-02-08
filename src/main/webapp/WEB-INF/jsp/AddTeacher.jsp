@@ -52,8 +52,18 @@
         })
 
         function send_teacher() {
-            console.log($("#subjects").val());
-            var subject = JSON.parse($("#subjects").val());
+            let str = '[';
+            for (let i = 0; i < $('#subjects').val().length; i++) {
+                if (i == $('#subjects').val().length - 1) {
+                    str += $('#subjects').val()[i];
+                } else {
+                    str += $('#subjects').val()[i] + ',';
+                }
+            }
+            str += ']';
+            console.log(str);
+
+
             if ($("#TeacherForm").valid()) {
                 $.ajax(
                     {
@@ -65,8 +75,8 @@
                         data: JSON.stringify({
                             speciality: $("#speciality").val(),
                             fio: $("#fio").val(),
-                            subjects: subject,
-                            datepicker: $("#datepicker").val()
+                            subjects: JSON.parse(str),
+                            borndate: $("#datepicker").val()
                         })
                     }
                 )
@@ -85,7 +95,6 @@
             <div><input type='text' name='datepicker' id='datepicker'/></div>
             <div><input type='text' name='fio' id='fio'/></div>
             <select name="subjects" multiple="multiple" id="subjects">
-                <option value=''>Выберите группу</option>
                 <c:forEach items='${SubjectList}' var='subjects'>
                     <option value='${subjects}'>${subjects.name}</option>
                 </c:forEach>

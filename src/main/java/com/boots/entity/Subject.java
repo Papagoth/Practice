@@ -35,20 +35,20 @@ public class Subject {
     private Long studyingtime;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
-    @JoinTable(name = "teacher_subjects",
-            joinColumns = {@JoinColumn(name = "subjects_id")},
-            inverseJoinColumns = {@JoinColumn(name = "teacher_id")})
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<Teacher> teachers = new HashSet<>();
+    //@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE})
+    //@JoinTable(name = "teacher_subjects",
+    //        joinColumns = {@JoinColumn(name = "subjects_id")},
+    //        inverseJoinColumns = {@JoinColumn(name = "teacher_id")})
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //private Set<Teacher> teachers = new HashSet<>();
 
-    public Set<Teacher> getTeachers() {
-        return teachers;
-    }
-
-    public void setTeachers(Set<Teacher> teachers) {
-        this.teachers = teachers;
-    }
+    //public Set<Teacher> getTeachers() {
+    //    return teachers;
+    //}
+//
+    //public void setTeachers(Set<Teacher> teachers) {
+    //    this.teachers = teachers;
+    //}
 
     public Subject(Party party, String name, Long studyingtime) {
         this.party = party;
@@ -91,12 +91,22 @@ public class Subject {
         this.studyingtime = studyingtime;
     }
 
+    //@Override
+    //public String toString() {
+    //    try {
+    //        return new ObjectMapper().writeValueAsString(this);
+    //    } catch (Exception e) {
+    //        return "";
+    //    }
+    //}
+
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (Exception e) {
-            return "";
-        }
+        return "{" +
+                "\"id\":" + id +
+                ", \"party\":" + party +
+                ", \"name\":\"" + name + '\"' +
+                ", \"studyingtime\":" + studyingtime +
+                '}';
     }
 }
