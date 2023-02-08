@@ -51,8 +51,8 @@ public class AddStudentController {
     @PostMapping(StringConstant.SLADDSTUDENT)
     public ResponseEntity<String> addStudent(@RequestBody Student student) {
         try {
-            System.out.println(student);
-            //studentService.save(student);
+            
+            studentService.save(student);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

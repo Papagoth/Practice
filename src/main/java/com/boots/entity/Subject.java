@@ -1,5 +1,6 @@
 package com.boots.entity;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -92,11 +93,10 @@ public class Subject {
 
     @Override
     public String toString() {
-        return "Subjects{" +
-                "id=" + id +
-                ", party=" + party +
-                ", name='" + name + '\'' +
-                ", studyingtime=" + studyingtime +
-                '}';
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

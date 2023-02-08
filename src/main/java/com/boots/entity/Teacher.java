@@ -1,6 +1,7 @@
 package com.boots.entity;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -86,13 +87,11 @@ public class Teacher {
 
     @Override
     public String toString() {
-        return "Teacher{" +
-                "id=" + id +
-                ", fio='" + fio + '\'' +
-                ", borndate='" + borndate + '\'' +
-                ", subjects=" + subjects +
-                ", speciality='" + speciality + '\'' +
-                '}';
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     public String parseIntoString() {

@@ -2,21 +2,27 @@ package com.boots.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Party {
     @Id
+    @JsonProperty
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(unique = true, nullable = false)
+    @JsonProperty
     @Size(min = 3)
     private String name;
     @Column
+    @JsonProperty
     @Size(min = 3)
     private String course;
 
@@ -25,14 +31,6 @@ public class Party {
         this.course = course;
     }
 
-    @JsonCreator
-    public Party(@JsonProperty("id") Long id, @JsonProperty("name") String name, @JsonProperty("course") String course) {
-        this.name = name;
-        this.course = course;
-    }
-
-    public Party() {
-    }
 
     public Long getId() {
         return id;
@@ -60,10 +58,11 @@ public class Party {
 
     @Override
     public String toString() {
-        return "Party{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", course='" + course + '\'' +
-                '}';
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (Exception e) {
+            return "";
+        }
     }
+
 }

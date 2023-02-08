@@ -47,7 +47,7 @@ public class AddPartyController {
     //    }
     //}
     @PostMapping(StringConstant.SLADDPARTY)
-    public ResponseEntity<String> addparty(@RequestBody Party party, BindingResult bindingResult) {
+    public ResponseEntity<String> addparty(@RequestBody Party party) {
         try {
             partyService.save(party);
             return new ResponseEntity<>("", HttpStatus.OK);

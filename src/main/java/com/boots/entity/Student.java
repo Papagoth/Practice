@@ -1,5 +1,6 @@
 package com.boots.entity;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -84,12 +85,10 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", party=" + party +
-                ", fio='" + fio + '\'' +
-                ", sticket=" + sticket +
-                ", borndata='" + borndata + '\'' +
-                '}';
+        try {
+            return new ObjectMapper().writeValueAsString(this);
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

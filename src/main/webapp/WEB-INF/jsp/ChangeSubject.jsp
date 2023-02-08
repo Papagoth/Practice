@@ -1,18 +1,61 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>ChangeSubject</title>
+    <meta charset="utf-8">
+    <title>ChangeSubject</title>
 
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.js"></script>
     <script>
-        $.validator.addMethod('symbols', function(value, element) {
+        function show_subject() {
+            $.get('/change_subject/' + document.getElementById("input_id").value, function (data) {
+                $("#name").val(data.name);
+                $("#studyingtime").val(data.studyingtime);
+                console.log(JSON.stringify(data.party));
+                $('#party').prepend('<option value=' + JSON.stringify(data.party) + '>' + data.party.name + '</option>');
+                $('#party option:contains("' + data.party.name + '")').prop('selected', true);
+            });
+        }
+
+        function send_subject() {
+            $("#span_name").text("");
+            if ($("#SubjectForm").valid()) {
+                $.ajax(
+                    {
+                        url: "/addchange_subject/" + document.getElementById("input_id").value,
+                        dataType: 'json',
+                        type: 'POST',
+                        cache: false,
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            id: $("#input_id").val(),
+                            name: $("#name").val(),
+                            party: JSON.parse($("#party").val()),
+                            studyingtime: $("#studyingtime").val()
+                        }),
+                        success: function () {
+                            show_subject();
+
+                        },
+                        error: function (data) {
+                            if (data.status == 404) {
+                                $("#span_name").text("Навзвание должен быть уникальным");
+                            }
+                        }
+                    }
+                )
+            }
+        }
+
+        $(document).ready(function () {
+            show_subject()
+        });
+        $.validator.addMethod('symbols', function (value, element) {
             return value.match(new RegExp("^" + "[А-Яа-яЁё ]" + "+$"));
         }, "Здесь должны быть только русские символы");
         $(function () {
@@ -20,25 +63,25 @@
             ({
                 rules: {
                     name: {
-                        required:true,
-                        symbols:true,
-                        minlength:2
+                        required: true,
+                        symbols: true,
+                        minlength: 2
 
                     },
                     studyingtime: {
-                        required:true,
-                        number:true,
-                        min:10,
-                        max:250
+                        required: true,
+                        number: true,
+                        min: 10,
+                        max: 250
                     }
                 },
                 messages: {
                     name: {
-                        required:'Это поле не должно быть пустым',
+                        required: 'Это поле не должно быть пустым',
                         minlength: 'Название предмета должно содержать больше 2 символов'
                     },
                     studyingtime: {
-                        required:'Это поле не должно быть пустым',
+                        required: 'Это поле не должно быть пустым',
                         number: 'Здесь не может быть символов',
                         min: 'Минимальное число 10 для времени обчуения',
                         max: 'Максимальное число 250 для времени обчуения'
@@ -50,36 +93,26 @@
 </head>
 
 <body>
-<div class ="size1">
-<jsp:include page="header.jsp"/>
-     <div class = "size2">
-  <form:form action="${pageContext.request.contextPath}/ChangeSubject/${SubjectForm.id}" method="post"  modelAttribute="SubjectForm" id="SubjectForm">
-
-                <div>
-                    <form:select path="party" name="party">
-                        <option value="${SubjectForm.party.id}" selected>${SubjectForm.party.name}</option>
-                        <c:forEach items="${PartyList}" var="party">
-                            <option value="${party.id}">${party.name}</option>
-                        </c:forEach>
-                    </form:select>
-                    <form:errors path="party"></form:errors>
-              </div>
-                            <div>
-              <form:input type="text" name="name" path="name" value="${SubjectForm.name}" placeholder="${SubjectForm.name}"/>
-              <form:errors path="name"></form:errors>
-              </div>
-                            <div>
-              <form:input type="number" name="studyingtime" path ="studyingtime" value="${SubjectForm.studyingtime}" placeholder="${SubjectForm.studyingtime}"/>
-              <form:errors path="studyingtime"></form:errors>
-              </div>
-
-              <button type="submit">Добавить</button>
-            </form:form>
-            </div>
-<div class=" size2">
-<a class="ssilka" href="<c:url value="/Subject"/>">Назад</a>
-</div>
-<jsp:include page="footer.jsp"/>
+<div class="size1">
+    <jsp:include page="header.jsp"/>
+    <div class="size2">
+        <form id="SubjectForm">
+            <div><input type='text' name='name' id='name'/></div>
+            <span id="span_name"></span>
+            <div><input type='number' name='studyingtime' id='studyingtime'/></div>
+            <select name="party" id="party">
+                <c:forEach items="${PartyList}" var="party">
+                    <option value='${party}'>${party.name}</option>
+                </c:forEach>
+            </select>
+            <div><input id="btn" type='button' onclick="send_subject()" value='Save'/></div>
+        </form>
+    </div>
+    <div class=" size2">
+        <input type="hidden" id="input_id" placeholder="${id}" value="${id}"/>
+        <a class="ssilka" href="<c:url value="/Subject"/>">Назад</a>
+    </div>
+    <jsp:include page="footer.jsp"/>
 </div>
 </body>
 </html>
