@@ -24,8 +24,7 @@ public class AddPartyController {
     private PartyService partyService;
 
     @GetMapping(StringConstant.SLADDPARTY)
-    public String party(Model model) {
-        model.addAttribute("PartyForm", new Party());
+    public String party() {
         return StringConstant.ADDPARTY;
     }
 
@@ -46,17 +45,19 @@ public class AddPartyController {
     //        return StringConstant.ADDPARTY;
     //    }
     //}
-    @PostMapping(StringConstant.SLADDPARTY)
-    public ResponseEntity<String> addparty(@RequestBody Party party) {
-        try {
-            partyService.save(party);
-            return new ResponseEntity<>("", HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
 
-    }
+    //@PostMapping(StringConstant.SLADDPARTY)
+    //public ResponseEntity<String> addparty(@RequestBody Party party) {
+    //    try {
+    //        partyService.save(party);
+    //        return new ResponseEntity<>("", HttpStatus.OK);
+    //    } catch (Exception e) {
+    //        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //    }
+
+
+    //}
 
 
 }

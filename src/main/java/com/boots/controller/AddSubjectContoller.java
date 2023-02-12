@@ -27,7 +27,7 @@ public class AddSubjectContoller {
 
     @GetMapping(StringConstant.SLADDSUBJECT)
     public String subject(Model model) {
-        model.addAttribute("PartyList", partyService.findAll());
+        model.addAttribute("partyList", partyService.findAll());
         return StringConstant.ADDSUBJECT;
     }
 

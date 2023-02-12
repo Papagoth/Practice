@@ -117,11 +117,11 @@
             <div><input type='number' name='sticket' id='sticket'/></div>
             <span id="span_name"></span>
             <select name="party" id="party">
-                <c:forEach items="${PartyList}" var="party">
+                <c:forEach items="${partyList}" var="party">
                     <option value='${party}'>${party.name}</option>
                 </c:forEach>
             </select>
-            <div><input id="btn" type='button' onclick="send_student()" value='Save'/></div>
+            <div><input id="btn" type='button' onclick="send_student()" value='Сохранить'/></div>
         </form>
     </div>
     <div class=" size2">

@@ -25,7 +25,7 @@ public class SubjectChangeController {
 
     @GetMapping(StringConstant.SLCHANGESUBJECT)
     public String getSubject(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("PartyList", subjectService.listWithoutParty(partyService.findAll(), subjectService.findSubjectsById(id).getParty().getName()));
+        model.addAttribute("partyList", subjectService.listWithoutParty(partyService.findAll(), subjectService.findSubjectsById(id).getParty().getName()));
         model.addAttribute("id", id);
         return StringConstant.CHANGESUBJECT;
     }

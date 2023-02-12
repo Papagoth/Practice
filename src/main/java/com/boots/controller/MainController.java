@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
     @GetMapping("/")
-    public String get()
-    {
+    public String get() {
         return StringConstant.MAIN;
     }
 

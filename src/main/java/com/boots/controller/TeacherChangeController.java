@@ -24,7 +24,7 @@ public class TeacherChangeController {
 
     @GetMapping(StringConstant.SLCHANGETEACHER)
     public String getTeacher(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("SubjectList", teacherService.listWithoutSubject(teacherService.findTeacherById(id).getSubjects(), subjectService.findAll()));
+        model.addAttribute("subjectList", teacherService.listWithoutSubject(teacherService.findTeacherById(id).getSubjects(), subjectService.findAll()));
         model.addAttribute("id", id);
         return StringConstant.CHANGETEACHER;
     }

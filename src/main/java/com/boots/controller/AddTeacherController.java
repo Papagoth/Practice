@@ -28,7 +28,7 @@ public class AddTeacherController {
 
     @GetMapping(StringConstant.SLADDTEACHER)
     public String teacher(Model model) {
-        model.addAttribute("SubjectList", subjectService.findAll());
+        model.addAttribute("subjectList", subjectService.findAll());
         return StringConstant.ADDTEACHER;
     }
 

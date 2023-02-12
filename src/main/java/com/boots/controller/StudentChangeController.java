@@ -27,7 +27,7 @@ public class StudentChangeController {
 
     @GetMapping(StringConstant.SLCHANGESTUDENT)
     public String getStudent(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("PartyList", studentService.listWithoutParty(partyService.findAll(), studentService.findStudentById(id).getParty().getName()));
+        model.addAttribute("partyList", studentService.listWithoutParty(partyService.findAll(), studentService.findStudentById(id).getParty().getName()));
         model.addAttribute("id", id);
         return StringConstant.CHANGESTUDENT;
     }

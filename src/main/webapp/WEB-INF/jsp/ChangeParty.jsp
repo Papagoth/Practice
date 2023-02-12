@@ -99,7 +99,7 @@
             <div><input type='text' name='name' id='name'/></div>
             <span id="span_name"></span>
             <div><input type='text' name='course' id='course'/></div>
-            <div><input id="btn" type='button' onclick="send_party()" value='Save'/></div>
+            <div><input id="btn" type='button' onclick="send_party()" value='Сохранить'/></div>
         </form>
     </div>
 

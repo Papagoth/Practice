@@ -29,7 +29,7 @@ public class AddStudentController {
 
     @GetMapping(StringConstant.SLADDSTUDENT)
     public String student(Model model) {
-        model.addAttribute("PartyList", partyService.findAll());
+        model.addAttribute("partyList", partyService.findAll());
         return StringConstant.ADDSTUDENT;
     }
 
@@ -51,7 +51,6 @@ public class AddStudentController {
     @PostMapping(StringConstant.SLADDSTUDENT)
     public ResponseEntity<String> addStudent(@RequestBody Student student) {
         try {
-            
             studentService.save(student);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

@@ -95,11 +95,11 @@
             <div><input type='text' name='datepicker' id='datepicker'/></div>
             <div><input type='text' name='fio' id='fio'/></div>
             <select name="subjects" multiple="multiple" id="subjects">
-                <c:forEach items='${SubjectList}' var='subjects'>
+                <c:forEach items='${subjectList}' var='subjects'>
                     <option value='${subjects}'>${subjects.name}</option>
                 </c:forEach>
             </select>
-            <div><input id="btn" type='button' onclick="send_teacher()" value='Save'/></div>
+            <div><input id="btn" type='button' onclick="send_teacher()" value='Сохранить'/></div>
         </form>
     </div>
 

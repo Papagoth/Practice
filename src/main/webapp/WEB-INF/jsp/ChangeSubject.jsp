@@ -101,11 +101,11 @@
             <span id="span_name"></span>
             <div><input type='number' name='studyingtime' id='studyingtime'/></div>
             <select name="party" id="party">
-                <c:forEach items="${PartyList}" var="party">
+                <c:forEach items="${partyList}" var="party">
                     <option value='${party}'>${party.name}</option>
                 </c:forEach>
             </select>
-            <div><input id="btn" type='button' onclick="send_subject()" value='Save'/></div>
+            <div><input id="btn" type='button' onclick="send_subject()" value='Сохранить'/></div>
         </form>
     </div>
     <div class=" size2">
