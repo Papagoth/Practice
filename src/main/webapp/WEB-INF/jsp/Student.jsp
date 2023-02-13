@@ -7,14 +7,158 @@
     <meta charset="utf-8">
     <title>Student</title>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.js"></script>
+    <script>
+
+        $(function () {
+            $("#borndata").datepicker();
+        });
+        $.validator.addMethod('symbols', function (value, element) {
+            return value.match(new RegExp("^" + "[А-Яа-яЁё ]" + "+$"));
+        }, "Здесь должны быть только русские символы");
+
+        $(function () {
+            $("#StudentForm").validate
+            ({
+                rules: {
+                    fio: {
+                        required: true,
+                        symbols: true,
+                        minlength: 4
+                    },
+                    sticket: {
+                        required: true,
+                        number: true,
+                        min: 10000000,
+                        max: 99999999
+                    },
+                    borndate: {
+                        required: true
+                    }
+                },
+                messages: {
+                    sticket: {
+                        required: 'Это поле не должно быть пустым',
+                        min: 'Минимальное число 10000000 для билета',
+                        max: 'Максимальное число 99999999 для билета'
+                    },
+                    fio: {
+                        required: 'Это поле не должно быть пустым',
+                        number: 'Здесь не может быть символов',
+                        minlength: 'Здесь не может быть меньше 4 символов'
+                    },
+                    borndate: {
+                        required: "Это поле не должно быть пустым"
+                    }
+                }
+            });
+        })
+
+        function show_onestudent(id) {
+            $.get('/get_onestudent/' + id, function (data) {
+                $("#id").val(id);
+                $("#fio").val(data.fio);
+                $("#borndata").val(data.borndata);
+                $("#sticket").val(data.sticket);
+                $('#party option:contains("' + data.party.name + '")').prop('selected', true);
+                document.getElementById('StudentForm').removeAttribute("class");
+            });
+        }
+
+
+        function show_allstudent() {
+            $.get('/get_allstudent', function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    $('#myTable').append('<tr id = ' + data[i].id + '><td>' + data[i].fio + '</td><td>' + data[i].party.name + '</td><td>' + data[i].sticket + '</td><td>' + data[i].borndata + '</td><td><button type="button" onclick="show_onestudent(' + data[i].id + ')">Изменить студента</button></td><td><a class="ssilka"href="/DeleteStudent/' + data[i].id + '">Удалить студента</a></td></tr>');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            show_allstudent();
+            show_allparty();
+        });
+
+        function show_allparty() {
+            $.get('/get_allparty', function (data) {
+                for (let i = 0; i < data.length; i++) {
+                    $('#party').append('<option value=' + JSON.stringify(data[i]) + '>' + data[i].name + '</option>');
+                }
+            });
+        }
+
+        function send() {
+            document.getElementById('StudentForm').removeAttribute("class");
+            $("#id").val('');
+            $("#fio").val('');
+            $("#borndata").val('');
+            $("#sticket").val('');
+            $('#party option[value=""]').prop('selected', true);
+        }
+
+        function send_student() {
+            $("#span_name").text("");
+            if ($("#StudentForm").valid()) {
+                $.ajax(
+                    {
+                        url: "/AddStudent",
+                        dataType: 'json',
+                        type: 'POST',
+                        cache: false,
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            id: $("#id").val(),
+                            fio: $("#fio").val(),
+                            party: JSON.parse($("#party").val()),
+                            borndata: $("#borndata").val(),
+                            sticket: $("#sticket").val()
+                        }),
+                        success: function (data) {
+                            document.getElementById('StudentForm').classList.add('visible');
+                            if ($("#" + data.id + "").length) {
+                                $("#" + data.id + "").remove();
+                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')">Изменить студента</button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
+                            } else {
+                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')">Изменить студента</button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
+                            }
+
+                        },
+                        error: function (data) {
+                            if (data.status == 404) {
+                                $("#span_name").text("Номер должен быть уникальным");
+                            }
+                        }
+                    }
+                )
+            }
+        }
+
+    </script>
+
 </head>
 <body>
 <div class="size1">
 
     <jsp:include page="header.jsp"/>
 
+
+    <div class="size2">
+        <form id="StudentForm" class="visible">
+            <div><input type='hidden' name='id' id='id'/></div>
+            <div><input type='text' name='fio' id='fio'/></div>
+            <div><input type='number' name='sticket' id='sticket'/></div>
+            <div><input type='text' name='borndata' id='borndata'/></div>
+            <span id="span_name"></span>
+            <select name="party" id="party">
+                <option value=''>Выберите группу</option>
+            </select>
+            <div><input id="btn" type='button' onclick="send_student()" value='Сохранить'/></div>
+        </form>
+    </div>
     <div class="roboto">
-        <table>
+        <table id='myTable'>
             <thead>
             <th>ФИО</th>
             <th>Название группы</th>
@@ -23,20 +167,12 @@
             <th>Кнопка изменения</th>
             <th>Кнопка удаления</th>
             </thead>
-            <c:forEach items="${Student}" var="student">
-            <tr>
-
-                <td>${student.fio}</td>
-                <td>${student.party.name}</td>
-                <td>${student.sticket}</td>
-                <td>${student.borndata}</td>
-                <td><a class="ssilka" href="<c:url value="/ChangeStudent/${student.id}"/>">Изменить студента</a></td>
-                <td><a class="ssilka" href="<c:url value="/DeleteStudent/${student.id}"/>">Удалить студента</a></td>
-                </c:forEach>
+            <tbody>
+            </tbody>
         </table>
     </div>
     <div class=" size2">
-        <a class="ssilka" href="<c:url value="/AddStudent"/>">Добавить студента</a>
+        <button type="button" onclick="send()">Добавить студента</button>
     </div>
     <jsp:include page="footer.jsp"/>
 </div>

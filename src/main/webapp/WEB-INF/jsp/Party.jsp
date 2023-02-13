@@ -18,12 +18,17 @@
                 $("#id").val(id);
                 $("#name").val(data.name);
                 $("#course").val(data.course);
-                document.getElementById('PartyForm').removeAttribute("class");
+                document.getElementById('partyForm').removeAttribute("class");
             });
         }
 
         function send() {
-            document.getElementById('PartyForm').removeAttribute("class");
+            $("#id").val('');
+            $("#name").val('');
+            $("#course").val('');
+            document.getElementById('partyForm').removeAttribute("class");
+
+
         }
 
         function show_allparty() {
@@ -42,7 +47,7 @@
             return value.match(new RegExp("^" + "[А-Яа-яЁё ]" + "+$"));
         }, "Здесь должны быть только русские символы");
         $(function () {
-            $("#PartyForm").validate
+            $("#partyForm").validate
             ({
                 rules: {
                     name: {
@@ -72,7 +77,7 @@
 
         function send_party() {
             $("#span_name").text("");
-            if ($("#PartyForm").valid()) {
+            if ($("#partyForm").valid()) {
                 $.ajax(
                     {
                         url: '/AddParty',
@@ -86,7 +91,7 @@
                             course: $("#course").val()
                         }),
                         success: function (data) {
-                            document.getElementById('PartyForm').classList.add('visible');
+                            document.getElementById('partyForm').classList.add('visible');
                             if ($("#" + data.id + "").length) {
                                 $("#" + data.id + "").remove();
                                 $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')">Изменить</td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
@@ -114,8 +119,8 @@
 
     <div class="roboto">
         <div class="size2">
-            <form id="PartyForm" class="visible">
-                <div><input type='hidden' name='if' id='id'/></div>
+            <form id="partyForm" class="visible">
+                <div><input type='hidden' name='id' id='id'/></div>
                 <div><input type='text' name='name' id='name'/></div>
                 <span id="span_name"></span>
                 <div><input type='text' name='course' id='course'/></div>
@@ -135,8 +140,8 @@
         </table>
     </div>
     <div class=" size2">
-        <a class="ssilka" href="<c:url value="/AddParty"/>">Добавить группу</a>
-        <button type="button" onclick="send()">Нажми</button>
+
+        <button type="button" onclick="send()">Добавить группу</button>
     </div>
     <jsp:include page="footer.jsp"/>
 </div>

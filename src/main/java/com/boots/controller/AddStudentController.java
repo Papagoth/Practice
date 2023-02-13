@@ -48,14 +48,14 @@ public class AddStudentController {
     //        return StringConstant.ADDSTUDENT;
     //    }
     //}
-    @PostMapping(StringConstant.SLADDSTUDENT)
-    public ResponseEntity<String> addStudent(@RequestBody Student student) {
-        try {
-            studentService.save(student);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+    // @PostMapping(StringConstant.SLADDSTUDENT)
+    // public ResponseEntity<String> addStudent(@RequestBody Student student) {
+    //     try {
+    //         studentService.save(student);
+    //         return new ResponseEntity<>(HttpStatus.OK);
+    //     } catch (Exception e) {
+    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //     }
+    // }
 
 }

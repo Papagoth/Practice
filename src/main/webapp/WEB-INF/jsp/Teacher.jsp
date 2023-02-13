@@ -25,7 +25,7 @@
                 <th>Кнопка изменения</th>
                 <th>Кнопка удаления</th>
                 </thead>
-                <c:forEach items="${Teacher}" var="teacher">
+                <c:forEach items="${teacher}" var="teacher">
                 <tr>
                     <td>${teacher.fio}</td>
                     <td>${teacher.borndate}</td>

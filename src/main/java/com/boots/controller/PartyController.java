@@ -21,8 +21,7 @@ public class PartyController {
     private PartyService partyService;
 
     @GetMapping(StringConstant.SLPARTY)
-    public String party(Model model) {
-        model.addAttribute("Party", partyService.findAll());
+    public String party() {
         return StringConstant.PARTY;
     }
 

@@ -47,16 +47,16 @@ public class AddSubjectContoller {
     //        return StringConstant.ADDSUBJECT;
     //    }
     //}
-    @PostMapping(StringConstant.SLADDSUBJECT)
-    public ResponseEntity<String> addSubject(@RequestBody Subject subject) {
-        try {
-            //System.out.println(subject);
-            subjectService.save(subject);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+    //@PostMapping(StringConstant.SLADDSUBJECT)
+    //public ResponseEntity<String> addSubject(@RequestBody Subject subject) {
+    //        try {
+    //                //System.out.println(subject);
+    //                subjectService.save(subject);
+    //                return new ResponseEntity<>(HttpStatus.OK);
+    //            } catch (Exception e) {
+    //                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //            }
+    //    }
 
 
 }

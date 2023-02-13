@@ -16,7 +16,7 @@ public class TeacherController {
     @GetMapping(StringConstant.SLTEACHER)
     public String teacher(Model model)
     {
-        model.addAttribute("Teacher",teacherService.findAll());
+        model.addAttribute("teacher",teacherService.findAll());
         return StringConstant.TEACHER;
     }
 
