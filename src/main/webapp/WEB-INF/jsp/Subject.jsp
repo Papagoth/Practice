@@ -128,28 +128,29 @@
 <body>
 <div class="size1">
     <jsp:include page="header.jsp"/>
-    <div class="size2">
-        <form id="subjectForm" class="visible">
-            <div><input type='hidden' name='id' id='id'/></div>
-            <div><label>Название предмета</label><input type='text' name='name' id='name'/></div>
-            <span id="span_name"></span>
-            <div><label>Кол-во занятий</label><input type='number' name='studyingtime' id='studyingtime'/></div>
-            <select name="party" id="party">
-                <option value=''>Выберите группу</option>
-            </select>
-            <div>
-                <button type="button " onclick="send_subject()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                        src="/resources/image/disc.png">
-                </button>
-            </div>
-            <div>
-                <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                src="/resources/image/back.png">
-                </button>
-            </div>
-        </form>
-    </div>
+
     <div class="roboto">
+        <div class="size2">
+            <form id="subjectForm" class="visible">
+                <div><input type='hidden' name='id' id='id'/></div>
+                <div><label>Название предмета</label><input type='text' name='name' id='name'/></div>
+                <span id="span_name"></span>
+                <div><label>Кол-во занятий</label><input type='number' name='studyingtime' id='studyingtime'/></div>
+                <select name="party" id="party">
+                    <option value=''>Выберите группу</option>
+                </select>
+                <div>
+                    <button type="button " onclick="send_subject()" class="img_button"><img class="icon" alt="logo_1"
+                        src="/resources/image/disc.png">
+                    </button>
+                </div>
+                <div>
+                    <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
+                        src="/resources/image/back.png">
+                    </button>
+                </div>
+            </form>
+        </div>
         <table id='myTable'>
             <thead>
             <th>Название предмета</th>
