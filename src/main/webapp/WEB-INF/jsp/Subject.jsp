@@ -120,6 +120,10 @@
                 document.getElementById('subjectForm').removeAttribute("class");
             });
         }
+
+        function hide() {
+            document.getElementById('subjectForm').classList.add('visible');
+        }
     </script>
 </head>
 
@@ -130,13 +134,15 @@
     <div class="size2">
         <form id="subjectForm" class="visible">
             <div><input type='hidden' name='id' id='id'/></div>
-            <div><input type='text' name='name' id='name'/></div>
+            <div><label>Название предмета</label><input type='text' name='name' id='name'/></div>
             <span id="span_name"></span>
-            <div><input type='number' name='studyingtime' id='studyingtime'/></div>
+            <div><label>Кол-во занятий</label><input type='number' name='studyingtime' id='studyingtime'/></div>
             <select name="party" id="party">
                 <option value=''>Выберите группу</option>
             </select>
             <div><input id="btn" type='button' onclick="send_subject()" value='Сохранить'/></div>
+            <div><input type='button' onclick="hide()" value='Назад'/></div>
+
         </form>
     </div>
     <div class="roboto">

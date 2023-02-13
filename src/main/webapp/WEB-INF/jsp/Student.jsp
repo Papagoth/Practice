@@ -20,7 +20,7 @@
         }, "Здесь должны быть только русские символы");
 
         $(function () {
-            $("#StudentForm").validate
+            $("#studentForm").validate
             ({
                 rules: {
                     fio: {
@@ -63,7 +63,7 @@
                 $("#borndata").val(data.borndata);
                 $("#sticket").val(data.sticket);
                 $('#party option:contains("' + data.party.name + '")').prop('selected', true);
-                document.getElementById('StudentForm').removeAttribute("class");
+                document.getElementById('studentForm').removeAttribute("class");
             });
         }
 
@@ -90,7 +90,7 @@
         }
 
         function send() {
-            document.getElementById('StudentForm').removeAttribute("class");
+            document.getElementById('studentForm').removeAttribute("class");
             $("#id").val('');
             $("#fio").val('');
             $("#borndata").val('');
@@ -100,7 +100,7 @@
 
         function send_student() {
             $("#span_name").text("");
-            if ($("#StudentForm").valid()) {
+            if ($("#studentForm").valid()) {
                 $.ajax(
                     {
                         url: "/AddStudent",
@@ -116,7 +116,7 @@
                             sticket: $("#sticket").val()
                         }),
                         success: function (data) {
-                            document.getElementById('StudentForm').classList.add('visible');
+                            document.getElementById('studentForm').classList.add('visible');
                             if ($("#" + data.id + "").length) {
                                 $("#" + data.id + "").remove();
                                 $('#myTable').append('<tr id = ' + data.id + '><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')">Изменить студента</button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
@@ -135,6 +135,10 @@
             }
         }
 
+        function hide() {
+            document.getElementById('studentForm').classList.add('visible');
+        }
+
     </script>
 
 </head>
@@ -145,16 +149,17 @@
 
 
     <div class="size2">
-        <form id="StudentForm" class="visible">
+        <form id="studentForm" class="visible">
             <div><input type='hidden' name='id' id='id'/></div>
-            <div><input type='text' name='fio' id='fio'/></div>
-            <div><input type='number' name='sticket' id='sticket'/></div>
-            <div><input type='text' name='borndata' id='borndata'/></div>
+            <div><label>ФИО студента</label><input type='text' name='fio' id='fio'/></div>
+            <div><label>Номер билета</label><input type='number' name='sticket' id='sticket'/></div>
+            <div><label>Дата рождения</label><input type='text' name='borndata' id='borndata'/></div>
             <span id="span_name"></span>
             <select name="party" id="party">
                 <option value=''>Выберите группу</option>
             </select>
             <div><input id="btn" type='button' onclick="send_student()" value='Сохранить'/></div>
+            <div><input type='button' onclick="hide()" value='Назад'/></div>
         </form>
     </div>
     <div class="roboto">

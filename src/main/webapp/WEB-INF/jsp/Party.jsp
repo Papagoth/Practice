@@ -109,6 +109,10 @@
                 )
             }
         }
+
+        function hide() {
+            document.getElementById('partyForm').classList.add('visible');
+        }
     </script>
 </head>
 
@@ -121,10 +125,11 @@
         <div class="size2">
             <form id="partyForm" class="visible">
                 <div><input type='hidden' name='id' id='id'/></div>
-                <div><input type='text' name='name' id='name'/></div>
+                <div><label>Название группы</label><input type='text' name='name' id='name'/></div>
                 <span id="span_name"></span>
-                <div><input type='text' name='course' id='course'/></div>
+                <div><label>Название курса</label><input type='text' name='course' id='course'/></div>
                 <div><input id="btn" type='button' onclick="send_party()" value='Сохранить'/></div>
+                <div><input type='button' onclick="hide()" value='Назад'/></div>
             </form>
         </div>
         <table id='myTable'>
