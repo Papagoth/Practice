@@ -34,7 +34,7 @@
         function show_allparty() {
             $.get('/get_allparty', function (data) {
                 for (let i = 0; i < data.length; i++) {
-                    $('#myTable').append('<tr id = ' + data[i].id + '><td>' + data[i].name + '</td><td>' + data[i].course + '</td><td><button type="button" onclick="show_party(' + data[i].id + ')">Изменить</td><td><a class="ssilka"href="/DeleteParty/' + data[i].id + '">Удалить группу</a></td></tr>');
+                    $('#myTable').append('<tr id = ' + data[i].id + '><td>' + data[i].name + '</td><td>' + data[i].course + '</td><td><button type="button" class="img_button" onclick="show_party(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data[i].id + '">Удалить группу</a></td></tr>');
                 }
             });
         }
@@ -94,9 +94,9 @@
                             document.getElementById('partyForm').classList.add('visible');
                             if ($("#" + data.id + "").length) {
                                 $("#" + data.id + "").remove();
-                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')">Изменить</td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
+                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
                             } else {
-                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')">Изменить</td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
+                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
                             }
                         },
                         error: function (data) {
@@ -128,8 +128,17 @@
                 <div><label>Название группы</label><input type='text' name='name' id='name'/></div>
                 <span id="span_name"></span>
                 <div><label>Название курса</label><input type='text' name='course' id='course'/></div>
-                <div><input id="btn" type='button' onclick="send_party()" value='Сохранить'/></div>
-                <div><input type='button' onclick="hide()" value='Назад'/></div>
+
+                <div>
+                    <button type="button " onclick="send_party()" class="img_button"><img class="icon" alt="logo_1"
+                                                                                          src="/resources/image/disc.png">
+                    </button>
+                </div>
+                <div>
+                    <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
+                                                                                    src="/resources/image/back.png">
+                    </button>
+                </div>
             </form>
         </div>
         <table id='myTable'>
@@ -146,7 +155,8 @@
     </div>
     <div class=" size2">
 
-        <button type="button" onclick="send()">Добавить группу</button>
+        <button type="button" onclick="send()" class="img_button"><img class="icon" alt="logo_1"
+                                                                       src="/resources/image/plus.png"></button>
     </div>
     <jsp:include page="footer.jsp"/>
 </div>

@@ -286,3 +286,20 @@ th {
 .visible {
     display: none;
 }
+
+.icon {
+    width: 32px;
+    height: 32px;
+    background: #999999;
+}
+
+.img_button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+}
+
+.img_button:hover {
+    outline: 2px solid black;
+}

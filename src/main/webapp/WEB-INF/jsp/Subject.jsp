@@ -6,7 +6,6 @@
 <head>
     <meta charset="utf-8">
     <title>Subject</title>
-
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
@@ -15,7 +14,7 @@
         function show_allsubject() {
             $.get("/get_allsubject", function (data) {
                 for (let i = 0; i < data.length; i++) {
-                    $('#myTable').append('<tr id = ' + data[i].id + '><td>' + data[i].name + '</td><td>' + data[i].party.name + '</td><td>' + data[i].studyingtime + '</td><td><button type="button" onclick="show_onesubject(' + data[i].id + ')">Изменить предмет</button></td><td><a class="ssilka"href="/DeleteSubject/' + data[i].id + '">Удалить предмет</a></td></tr>');
+                    $('#myTable').append('<tr id = ' + data[i].id + '><td>' + data[i].name + '</td><td>' + data[i].party.name + '</td><td>' + data[i].studyingtime + '</td><td><button type="button" onclick="show_onesubject(' + data[i].id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteSubject/' + data[i].id + '">Удалить предмет</a></td></tr>');
                 }
             });
         }
@@ -96,9 +95,9 @@
                             document.getElementById('subjectForm').classList.add('visible');
                             if ($("#" + data.id + "").length) {
                                 $("#" + data.id + "").remove();
-                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.party.name + '</td><td>' + data.studyingtime + '</td><td><button type="button" onclick="show_onesubject(' + data.id + ')">Изменить предмет</button></td><td><a class="ssilka"href="/DeleteSubject/' + data.id + '">Удалить предмет</a></td></tr>');
+                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.party.name + '</td><td>' + data.studyingtime + '</td><td><button type="button" onclick="show_onesubject(' + data.id + ')"class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteSubject/' + data.id + '">Удалить предмет</a></td></tr>');
                             } else {
-                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.party.name + '</td><td>' + data.studyingtime + '</td><td><button type="button" onclick="show_onesubject(' + data.id + ')">Изменить предмет</button></td><td><a class="ssilka"href="/DeleteSubject/' + data.id + '">Удалить предмет</a></td></tr>');
+                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.party.name + '</td><td>' + data.studyingtime + '</td><td><button type="button" onclick="show_onesubject(' + data.id + ')"class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteSubject/' + data.id + '">Удалить предмет</a></td></tr>');
                             }
                         },
                         error: function (data) {
@@ -126,10 +125,8 @@
         }
     </script>
 </head>
-
 <body>
 <div class="size1">
-
     <jsp:include page="header.jsp"/>
     <div class="size2">
         <form id="subjectForm" class="visible">
@@ -140,9 +137,16 @@
             <select name="party" id="party">
                 <option value=''>Выберите группу</option>
             </select>
-            <div><input id="btn" type='button' onclick="send_subject()" value='Сохранить'/></div>
-            <div><input type='button' onclick="hide()" value='Назад'/></div>
-
+            <div>
+                <button type="button " onclick="send_subject()" class="img_button"><img class="icon" alt="logo_1"
+                                                                                        src="/resources/image/disc.png">
+                </button>
+            </div>
+            <div>
+                <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
+                                                                                src="/resources/image/back.png">
+                </button>
+            </div>
         </form>
     </div>
     <div class="roboto">
@@ -159,10 +163,10 @@
         </table>
     </div>
     <div class=" size2">
-        <button type="button" onclick="send()">Добавить предмет</button>
+        <button type="button" onclick="send()" class="img_button"><img class="icon" alt="logo_1"
+                                                                       src="/resources/image/plus.png"></button>
     </div>
     <jsp:include page="footer.jsp"/>
-
 </div>
 </body>
 </html>

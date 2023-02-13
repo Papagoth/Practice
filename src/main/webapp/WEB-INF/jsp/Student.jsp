@@ -71,7 +71,7 @@
         function show_allstudent() {
             $.get('/get_allstudent', function (data) {
                 for (let i = 0; i < data.length; i++) {
-                    $('#myTable').append('<tr id = ' + data[i].id + '><td>' + data[i].fio + '</td><td>' + data[i].party.name + '</td><td>' + data[i].sticket + '</td><td>' + data[i].borndata + '</td><td><button type="button" onclick="show_onestudent(' + data[i].id + ')">Изменить студента</button></td><td><a class="ssilka"href="/DeleteStudent/' + data[i].id + '">Удалить студента</a></td></tr>');
+                    $('#myTable').append('<tr id = ' + data[i].id + '><td>' + data[i].fio + '</td><td>' + data[i].party.name + '</td><td>' + data[i].sticket + '</td><td>' + data[i].borndata + '</td><td><button type="button" onclick="show_onestudent(' + data[i].id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data[i].id + '">Удалить студента</a></td></tr>');
                 }
             });
         }
@@ -119,11 +119,10 @@
                             document.getElementById('studentForm').classList.add('visible');
                             if ($("#" + data.id + "").length) {
                                 $("#" + data.id + "").remove();
-                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')">Изменить студента</button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
+                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
                             } else {
-                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')">Изменить студента</button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
+                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
                             }
-
                         },
                         error: function (data) {
                             if (data.status == 404) {
@@ -158,8 +157,16 @@
             <select name="party" id="party">
                 <option value=''>Выберите группу</option>
             </select>
-            <div><input id="btn" type='button' onclick="send_student()" value='Сохранить'/></div>
-            <div><input type='button' onclick="hide()" value='Назад'/></div>
+            <div>
+                <button type="button " onclick="send_student()" class="img_button"><img class="icon" alt="logo_1"
+                                                                                        src="/resources/image/disc.png">
+                </button>
+            </div>
+            <div>
+                <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
+                                                                                src="/resources/image/back.png">
+                </button>
+            </div>
         </form>
     </div>
     <div class="roboto">
@@ -177,7 +184,8 @@
         </table>
     </div>
     <div class=" size2">
-        <button type="button" onclick="send()">Добавить студента</button>
+        <button type="button" onclick="send()" class="img_button"><img class="icon" alt="logo_1"
+                                                                       src="/resources/image/plus.png"></button>
     </div>
     <jsp:include page="footer.jsp"/>
 </div>
