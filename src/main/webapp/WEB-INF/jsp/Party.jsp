@@ -125,18 +125,19 @@
         <div class="size2">
             <form id="partyForm" class="visible">
                 <div><input type='hidden' name='id' id='id'/></div>
-                <div><label>Название группы</label><input type='text' name='name' id='name'/></div>
-                <span id="span_name"></span>
-                <div><label>Название курса</label><input type='text' name='course' id='course'/></div>
+                <div><label class="party_label">Название группы</label>
 
-                <div>
-                    <button type="button " onclick="send_party()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                          src="/resources/image/disc.png">
-                    </button>
+                    <input type='text' name='name' id='name'/>
+                    <span id="span_name"></span>
+                </div>
+                <div><label class="party_label">Название курса</label><input type='text' name='course' id='course'/>
                 </div>
                 <div>
                     <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
                                                                                     src="/resources/image/back.png">
+                    </button>
+                    <button type="button " onclick="send_party()" class="img_button"><img class="icon" alt="logo_1"
+                                                                                          src="/resources/image/disc.png">
                     </button>
                 </div>
             </form>

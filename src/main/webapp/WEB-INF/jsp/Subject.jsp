@@ -133,20 +133,20 @@
         <div class="size2">
             <form id="subjectForm" class="visible">
                 <div><input type='hidden' name='id' id='id'/></div>
-                <div><label>Название предмета</label><input type='text' name='name' id='name'/></div>
+                <div><label class="subject_label">Название предмета</label><input type='text' name='name' id='name'/>
+                </div>
                 <span id="span_name"></span>
-                <div><label>Кол-во занятий</label><input type='number' name='studyingtime' id='studyingtime'/></div>
-                <select name="party" id="party">
+                <div><label class="subject_label">Кол-во занятий</label><input type='number' name='studyingtime'
+                                                                               id='studyingtime'/></div>
+                <select name="party" id="party" class="select-css">
                     <option value=''>Выберите группу</option>
                 </select>
                 <div>
-                    <button type="button " onclick="send_subject()" class="img_button"><img class="icon" alt="logo_1"
-                        src="/resources/image/disc.png">
-                    </button>
-                </div>
-                <div>
                     <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
-                        src="/resources/image/back.png">
+                                                                                    src="/resources/image/back.png">
+                    </button>
+                    <button type="button " onclick="send_subject()" class="img_button"><img class="icon" alt="logo_1"
+                                                                                            src="/resources/image/disc.png">
                     </button>
                 </div>
             </form>

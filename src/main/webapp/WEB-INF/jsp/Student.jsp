@@ -13,7 +13,7 @@
     <script>
 
         $(function () {
-            $("#borndata").datepicker();
+            $("#borndata").datepicker({dateFormat: 'dd/mm/yy'});
         });
         $.validator.addMethod('symbols', function (value, element) {
             return value.match(new RegExp("^" + "[А-Яа-яЁё ]" + "+$"));
@@ -147,26 +147,25 @@
     <jsp:include page="header.jsp"/>
 
 
-
     <div class="roboto">
         <div class="size2">
             <form id="studentForm" class="visible">
                 <div><input type='hidden' name='id' id='id'/></div>
-                <div><label>ФИО студента</label><input type='text' name='fio' id='fio'/></div>
-                <div><label>Номер билета</label><input type='number' name='sticket' id='sticket'/></div>
-                <div><label>Дата рождения</label><input type='text' name='borndata' id='borndata'/></div>
+                <div><label class="student_label">ФИО студента</label><input type='text' name='fio' id='fio'/></div>
+                <div><label class="student_label">Номер билета</label><input type='number' name='sticket' id='sticket'/>
+                </div>
+                <div><label class="student_label">Дата рождения</label><input type='text' name='borndata'
+                                                                              id='borndata'/></div>
                 <span id="span_name"></span>
-                <select name="party" id="party">
+                <select name="party" id="party" class="select-css">
                     <option value=''>Выберите группу</option>
                 </select>
                 <div>
-                    <button type="button " onclick="send_student()" class="img_button"><img class="icon" alt="logo_1"
-                        src="/resources/image/disc.png">
-                    </button>
-                </div>
-                <div>
                     <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
-                        src="/resources/image/back.png">
+                                                                                    src="/resources/image/back.png">
+                    </button>
+                    <button type="button " onclick="send_student()" class="img_button"><img class="icon" alt="logo_1"
+                                                                                            src="/resources/image/disc.png">
                     </button>
                 </div>
             </form>
