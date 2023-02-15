@@ -10,7 +10,43 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.js"></script>
+    <script data-src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
+
+        $(function () {
+//Живой поиск
+            $('.who').bind("change keyup input click", function () {
+                if (this.value.length >= 2) {
+                    $.ajax({
+                        url: "/Party_Find/" + this.value, //Путь к обработчику
+                        type: 'get',
+                        cache: false,
+                        success: function (data) {
+                            $(".search_result").html(data).fadeIn(); //Выводим полученые данные в списке
+                            for (let i = 0; i < data.length; i++) {
+                                //$('ul').append('<li id="' + data[i].name + "' value='" + JSON.stringify(data[i]) + "'>" + data[i].name + "</li>");
+                                $('ul').append("<li id='" + data[i].name + "' data-attr='" + JSON.stringify(data[i]) + "'> " + data[i].name + "</li>");
+                            }
+                        }
+                    })
+                }
+            })
+
+            $(".search_result").hover(function () {
+                $(".who").blur(); //Убираем фокус с input
+            })
+
+//При выборе результата поиска, прячем список и заносим выбранный результат в input
+            $(".search_result").on("click", "li", function () {
+                //s_user = $(this).text();
+                //$(".who").val(s_user).attr('disabled', 'disabled'); //деактивируем input, если нужно
+                $(".who").text($("#" + $(this).text().trim()).attr('data-attr'));
+                $(".who").val($(this).text().trim())
+                $(".search_result").fadeOut();
+            })
+        })
+
+
         function show_allsubject() {
             $.get("/get_allsubject", function (data) {
                 for (let i = 0; i < data.length; i++) {
@@ -21,23 +57,24 @@
 
         $(document).ready(function () {
             show_allsubject();
-            show_allparty();
+            // show_allparty();
         });
 
-        function show_allparty() {
-            $.get('/get_allparty', function (data) {
-                for (let i = 0; i < data.length; i++) {
-                    $('#party').append('<option value=' + JSON.stringify(data[i]) + '>' + data[i].name + '</option>');
-                }
-            });
-        }
+        //function show_allparty() {
+        //    $.get('/get_allparty', function (data) {
+        //        for (let i = 0; i < data.length; i++) {
+        //            $('#party').append('<option value=' + JSON.stringify(data[i]) + '>' + data[i].name + '</option>');
+        //        }
+        //    });
+        //}
 
         function send() {
             document.getElementById('subjectForm').removeAttribute("class");
             $("#id").val('');
             $("#name").val('');
             $("#studyingtime").val('');
-            $('#party option[value=""]').prop('selected', true);
+            //$('#party option[value=""]').prop('selected', true);
+            $('.who').val('');
         }
 
         $.validator.addMethod('symbols', function (value, element) {
@@ -88,7 +125,7 @@
                         data: JSON.stringify({
                             id: $("#id").val(),
                             name: $("#name").val(),
-                            party: JSON.parse($('#party').val()),
+                            party: JSON.parse($(".who").text()),
                             studyingtime: $("#studyingtime").val()
                         }),
                         success: function (data) {
@@ -115,7 +152,9 @@
                 $("#id").val(id);
                 $("#name").val(data.name);
                 $("#studyingtime").val(data.studyingtime);
-                $('#party option:contains("' + data.party.name + '")').prop('selected', true);
+                //$('#party option:contains("' + data.party.name + '")').prop('selected', true);
+                $('.who').text(JSON.stringify(data.party))
+                $('.who').val(data.party.name)
                 document.getElementById('subjectForm').removeAttribute("class");
             });
         }
@@ -138,9 +177,8 @@
                 <span id="span_name"></span>
                 <div><label class="subject_label">Кол-во занятий</label><input type='number' name='studyingtime'
                                                                                id='studyingtime'/></div>
-                <select name="party" id="party" class="select-css">
-                    <option value=''>Выберите группу</option>
-                </select>
+                <input ENGINE="text" name="referal" placeholder="Живой поиск" value='' class="who" autocomplete="off">
+                <ul class="search_result"></ul>
                 <div>
                     <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
                                                                                     src="/resources/image/back.png">
