@@ -374,8 +374,8 @@ label {
 .search_result {
     background: #FFF;
     border: 1px #ccc solid;
-    width: 100px;
-    border-radius: 4px;
+    width: 150px;
+    border-radius: 3px;
     max-height: 100px;
     overflow-y: scroll;
     display: none;
@@ -393,4 +393,14 @@ label {
 
 .search_result li:hover {
     background: #F9FF00;
+}
+
+input {
+    width: 200px;
+    font-size: 13px;
+    padding: 6px 0 4px 10px;
+    border: 1px solid #cecece;
+    background: #F6F6f6;
+    border-radius: 8px;
+    margin: 3px;
 }
