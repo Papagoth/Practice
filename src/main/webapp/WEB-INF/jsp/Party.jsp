@@ -11,6 +11,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.js"></script>
+
     <script>
 
         function show_party(id) {
@@ -27,21 +31,46 @@
             $("#name").val('');
             $("#course").val('');
             document.getElementById('partyForm').removeAttribute("class");
-
-
         }
 
         function show_allparty() {
             $.get('/get_allparty', function (data) {
+                var table = $('#myTable').DataTable();
                 for (let i = 0; i < data.length; i++) {
-                    $('#myTable').append('<tr id = ' + data[i].id + '><td>' + data[i].name + '</td><td>' + data[i].course + '</td><td><button type="button" class="img_button" onclick="show_party(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data[i].id + '">Удалить группу</a></td></tr>');
+                    //$('#myTable').append('<tr><td>' + data[i].name + '</td><td>' + data[i].course + '</td><td><button type="button" class="img_button" onclick="show_party(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data[i].id + '">Удалить группу</a></td></tr>');
+                    table.row.add({
+                        "DT_RowId": data[i].id,
+                        "name": data[i].name,
+                        "course": data[i].course,
+                        "ChangeButton": '<button type="button" class="img_button" onclick="show_party(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                        "DeleteButton": '<a class="ssilka"href="/DeleteParty/' + data[i].id + '">Удалить группу</a>'
+                    }).draw();
+
                 }
             });
         }
 
+
         $(document).ready(function () {
+            var table = $('#myTable').DataTable({
+                "columns": [
+                    {
+                        "title": "Название группы", "data": "name", "visible": true,
+                    },
+                    {
+                        "title": "Название курса", "data": "course", "visible": true,
+                    },
+                    {
+                        "title": "Кнопка изменения", "data": "ChangeButton", "visible": true,
+                    },
+                    {
+                        "title": "Кнопка удаления", "data": "DeleteButton", "visible": true,
+                    }
+                ]
+            });
             show_allparty();
         });
+
 
         $.validator.addMethod('symbols', function (value, element) {
             return value.match(new RegExp("^" + "[А-Яа-яЁё ]" + "+$"));
@@ -92,11 +121,26 @@
                         }),
                         success: function (data) {
                             document.getElementById('partyForm').classList.add('visible');
+                            var table = $('#myTable').DataTable();
                             if ($("#" + data.id + "").length) {
                                 $("#" + data.id + "").remove();
-                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
+                                //$('#myTable').append('<tr><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
+                                table.row.add({
+                                    "DT_RowId": data.id,
+                                    "name": data.name,
+                                    "course": data.course,
+                                    "ChangeButton": '<button type="button" class="img_button" onclick="show_party(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                                    "DeleteButton": '<a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a>'
+                                }).draw();
                             } else {
-                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
+                                table.row.add({
+                                    "DT_RowId": data.id,
+                                    "name": data.name,
+                                    "course": data.course,
+                                    "ChangeButton": '<button type="button" class="img_button" onclick="show_party(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                                    "DeleteButton": '<a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a>'
+                                }).draw();
+                                //$('#myTable').append('<tr><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
                             }
                         },
                         error: function (data) {
@@ -149,9 +193,8 @@
             <th>Кнопка изменения</th>
             <th>Кнопка удаления</th>
             </thead>
-            <tbody>
+            <tbody></tbody>
 
-            </tbody>
         </table>
     </div>
     <div class=" size2">

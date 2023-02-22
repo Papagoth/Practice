@@ -11,6 +11,10 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.js"></script>
     <script data-src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.js"></script>
+
     <script>
 
         $(function () {
@@ -107,13 +111,47 @@
 
         function show_allstudent() {
             $.get('/get_allstudent', function (data) {
+                var table = $('#myTable').DataTable();
                 for (let i = 0; i < data.length; i++) {
-                    $('#myTable').append('<tr id = ' + data[i].id + '><td>' + data[i].fio + '</td><td>' + data[i].party.name + '</td><td>' + data[i].sticket + '</td><td>' + data[i].borndata + '</td><td><button type="button" onclick="show_onestudent(' + data[i].id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data[i].id + '">Удалить студента</a></td></tr>');
+
+                    table.row.add({
+                        "DT_RowId": data[i].id,
+                        "fio": data[i].fio,
+                        "party": data[i].party.name,
+                        "sticket": data[i].sticket,
+                        "borndata": data[i].borndata,
+                        "ChangeButton": '<button type="button" class="img_button" onclick="show_onestudent(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                        "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data[i].id + '">Удалить студента</a>'
+                    }).draw();
+                    //$('#myTable').append('<tr><td>' + data[i].fio + '</td><td>' + data[i].party.name + '</td><td>' + data[i].sticket + '</td><td>' + data[i].borndata + '</td><td><button type="button" onclick="show_onestudent(' + data[i].id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data[i].id + '">Удалить студента</a></td></tr>');
                 }
             });
         }
 
         $(document).ready(function () {
+
+            var table = $('#myTable').DataTable({
+                "columns": [
+                    {
+                        "title": "ФИО", "data": "fio", "visible": true,
+                    },
+                    {
+                        "title": "Название группы", "data": "party", "visible": true,
+                    },
+                    {
+                        "title": "Номер студ билета", "data": "sticket", "visible": true,
+                    },
+                    {
+                        "title": "Дата рождения", "data": "borndata", "visible": true,
+                    },
+                    {
+                        "title": "Кнопка изменения", "data": "ChangeButton", "visible": true,
+                    },
+                    {
+                        "title": "Кнопка удаления", "data": "DeleteButton", "visible": true,
+                    }
+                ]
+            });
             show_allstudent();
             // show_allparty();
         });
@@ -154,12 +192,32 @@
                             sticket: $("#sticket").val()
                         }),
                         success: function (data) {
+                            var table = $('#myTable').DataTable();
                             document.getElementById('studentForm').classList.add('visible');
                             if ($("#" + data.id + "").length) {
                                 $("#" + data.id + "").remove();
-                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
+                                table.row.add({
+                                    "DT_RowId": data.id,
+                                    "fio": data.fio,
+                                    "party": data.party.name,
+                                    "sticket": data.sticket,
+                                    "borndata": data.borndata,
+                                    "ChangeButton": '<button type="button" class="img_button" onclick="show_onestudent(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                                    "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a>'
+                                }).draw();
+                                //$('#myTable').append('<tr><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
                             } else {
-                                $('#myTable').append('<tr id = ' + data.id + '><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
+                                table.row.add({
+                                    "DT_RowId": data.id,
+                                    "fio": data.fio,
+                                    "party": data.party.name,
+                                    "sticket": data.sticket,
+                                    "borndata": data.borndata,
+                                    "ChangeButton": '<button type="button" class="img_button" onclick="show_onestudent(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                                    "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a>'
+                                }).draw();
+
+                                //$('#myTable').append('<tr ><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
                             }
                         },
                         error: function (data) {
@@ -218,8 +276,7 @@
             <th>Кнопка изменения</th>
             <th>Кнопка удаления</th>
             </thead>
-            <tbody>
-            </tbody>
+            <tbody></tbody>
         </table>
     </div>
     <div class=" size2">
