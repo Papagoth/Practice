@@ -1,6 +1,7 @@
 package com.boots.controller;
 
 import com.boots.constant.StringConstant;
+import com.boots.entity.Party;
 import com.boots.entity.Student;
 import com.boots.entity.Subject;
 import com.boots.service.PartyService;
@@ -49,6 +50,11 @@ public class SubjectController {
     @GetMapping("/get_onesubject/{id}")
     public ResponseEntity<Subject> getOneParty(@PathVariable("id") Long id) {
         return new ResponseEntity<>(subjectService.findSubjectsById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/Subject_Find/{name}")
+    public ResponseEntity<List<Subject>> findParty(@PathVariable("name") String name) {
+        return new ResponseEntity<>(subjectService.findAllByNameContainingOrderByName(name), HttpStatus.OK);
     }
 
 

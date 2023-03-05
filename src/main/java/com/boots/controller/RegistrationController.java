@@ -1,0 +1,43 @@
+package com.boots.controller;
+
+import com.boots.entity.Role;
+import com.boots.entity.User;
+import com.boots.repository.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Collections;
+import java.util.Map;
+
+@Controller
+public class RegistrationController {
+    @Autowired
+    private UserRepo userRepo;
+
+    @GetMapping("/registration")
+    public String show(Model model) {
+        model.addAttribute("userForm", new User());
+        return "registration";
+    }
+
+    @PostMapping("/registration")
+    public String addUser(User user, BindingResult bindingResult)//разбить на классы!
+    {
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+        user.setActive(true);
+        //user.setRoles(Collections.singleton(Role.ADMIN));
+        user.setRoles(Collections.singleton(Role.USER));
+        userRepo.save(user);
+        return "redirect:/login";
+
+    }
+
+
+}

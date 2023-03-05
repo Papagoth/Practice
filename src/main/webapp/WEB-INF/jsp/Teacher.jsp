@@ -13,6 +13,41 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.js"></script>
     <script>
+
+        $(function () {
+//Живой поиск
+            $('.who').bind("change keyup input click", function () {
+                if (this.value.length >= 2) {
+                    $.ajax({
+                        url: "/Subject_Find/" + this.value, //Путь к обработчику
+                        type: 'get',
+                        cache: false,
+                        success: function (data) {
+                            console.log(data)
+                            $(".search_result").html(data).fadeIn(); //Выводим полученые данные в списке
+                            for (let i = 0; i < data.length; i++) {
+                                //$('ul').append('<li id="' + data[i].name + "' value='" + JSON.stringify(data[i]) + "'>" + data[i].name + "</li>");
+                                $('ul').append("<li id='" + data[i].name + "' data-attr='" + JSON.stringify(data[i]) + "'> " + data[i].name + "</li>");
+                            }
+                        }
+                    })
+                }
+            })
+
+            $(".search_result").hover(function () {
+                $(".who").blur(); //Убираем фокус с input
+            })
+
+//При выборе результата поиска, прячем список и заносим выбранный результат в input
+            $(".search_result").on("click", "li", function () {
+                //s_user = $(this).text();
+                //$(".who").val(s_user).attr('disabled', 'disabled'); //деактивируем input, если нужно
+                $(".who").text($("#" + $(this).text().trim()).attr('data-attr'));
+                $(".who").val($(this).text().trim())
+                $(".search_result").fadeOut();
+            })
+        })
+
         $.validator.addMethod('symbols', function (value, element) {
             return value.match(new RegExp("^" + "[А-Яа-яЁё ]" + "+$"));
         }, "Здесь должны быть только русские символы");
@@ -217,6 +252,12 @@
                         <option value='${subjects}'>${subjects.name}</option>
                     </c:forEach>
                 </select>
+                <div>
+                    <input ENGINE="text" name="referal" placeholder="Живой поиск" value="" class="who"
+                           autocomplete="off">
+                    <ul class="search_result"></ul>
+                </div>
+
                 <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
                                                                                 src="/resources/image/back.png">
                 </button>
@@ -225,7 +266,6 @@
                 </button>
             </form>
         </div>
-
 
         <div class="size2">
             <table id="myTable">
@@ -238,10 +278,7 @@
                 <th>Кнопка удаления</th>
                 </thead>
                 <tbody>
-
                 </tbody>
-
-
             </table>
         </div>
     </div>

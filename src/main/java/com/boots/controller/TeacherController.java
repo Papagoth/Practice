@@ -35,13 +35,11 @@ public class TeacherController {
         return StringConstant.TEACHER;
     }
 
-
     //@PostMapping("/Some_name")
     //public ResponseEntity<String> getsome(@RequestBody Student student) {
     //        System.out.println(student);
     //        return new ResponseEntity<>(HttpStatus.OK);
     //    }
-
     @GetMapping("/get_allteacher")
     public ResponseEntity<List<Teacher>> getTeacher() {
         return new ResponseEntity<List<Teacher>>(teacherService.findAll(), HttpStatus.OK);

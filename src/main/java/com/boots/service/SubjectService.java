@@ -16,36 +16,42 @@ public class SubjectService {
     private SubjectRepo subjectRepo;
     @Autowired
     private PartyRepo partyRepo;
-    public List<Subject> findAll(){
+
+    public List<Subject> findAll() {
         return subjectRepo.findAll();
     }
 
-    public Subject findSubjectsById(Long id){
-   return subjectRepo.findSubjectsById(id);
+    public Subject findSubjectsById(Long id) {
+        return subjectRepo.findSubjectsById(id);
 
     }
-    public Subject save(Subject subject)
-    {return subjectRepo.save(subject);}
-    public void update(Long id,Long partyid,String name,Long studyingtime)
-    {
+
+    public Subject save(Subject subject) {
+        return subjectRepo.save(subject);
+    }
+
+    public void update(Long id, Long partyid, String name, Long studyingtime) {
         Subject subject = subjectRepo.findSubjectsById(id);
         subject.setParty(partyRepo.findPartyById(partyid));
         subject.setName(name);
         subject.setStudyingtime(studyingtime);
         subjectRepo.save(subject);
     }
-    public List<Party> listWithoutParty(List<Party> list, String party)
-    {
-        for(int i =0;i <list.size();i++)
-        {
-            if(list.get(i).getName().equals(party))
+
+    public List<Party> listWithoutParty(List<Party> list, String party) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getName().equals(party))
                 list.remove(i);
         }
         return list;
     }
-    public void delete(Long id)
-    {
+
+    public void delete(Long id) {
         subjectRepo.delete(findSubjectsById(id));
+    }
+
+    public List<Subject> findAllByNameContainingOrderByName(String name) {
+        return subjectRepo.findAllByNameContainingOrderByName(name);
     }
 
 
