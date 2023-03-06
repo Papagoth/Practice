@@ -5,6 +5,15 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <link rel="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css"
+          type="text/css"/>
     <title>Teacher</title>
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -33,6 +42,9 @@
                     })
                 }
             })
+            $(document).ready(function () {
+                $('#subjects').multiSelect();
+            });
 
             $(".search_result").hover(function () {
                 $(".who").blur(); //Убираем фокус с input
@@ -244,9 +256,11 @@
         <div class="size2">
             <form id="teacherForm" class="visible">
                 <div><input type='hidden' name='id' id='id'/></div>
-                <div><input type='text' name='speciality' id='speciality'/></div>
-                <div><input type='text' name='borndate' id='borndate'/></div>
-                <div><input type='text' name='fio' id='fio'/></div>
+                <div><label class="subject_label">Специализация</label><input type='text' name='speciality'
+                                                                              id='speciality'/></div>
+                <div><label class="subject_label">Дата рождения</label><input type='text' name='borndate'
+                                                                              id='borndate'/></div>
+                <div><label class="subject_label">ФИО</label><input type='text' name='fio' id='fio'/></div>
                 <select name="subjects" multiple="multiple" id="subjects">
                     <c:forEach items='${subjectList}' var='subjects'>
                         <option value='${subjects}'>${subjects.name}</option>
@@ -289,5 +303,6 @@
     </div>
     <jsp:include page="footer.jsp"/>
 </div>
+<script src="/resources/js/jquery.multi-select.js" type="text/javascript"></script>
 </body>
 </html>

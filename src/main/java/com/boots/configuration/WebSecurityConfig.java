@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .defaultSuccessUrl("/main")//глобальная константа!
+                .defaultSuccessUrl("/")//глобальная константа!
                 .and()
                 .logout()
                 .permitAll()
@@ -43,6 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.css", "/resources/image/plus.png", "/resources/image/recycle.png", "/resources/image/disc.png", "/resources/image/back.png", "/resources/image/image_1.png", "/resources/css/style.css", "https://code.jquery.com/jquery-3.6.0.js", "https://code.jquery.com/ui/1.13.2/jquery-ui.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.js", "https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.js", "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css", "/**/*.css");
+        web.ignoring().antMatchers("/resources/js/jquery.multi-select.js", "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css", "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css", "https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js", "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", "https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.css", "/resources/image/plus.png", "/resources/image/recycle.png", "/resources/image/disc.png", "/resources/image/back.png", "/resources/image/image_1.png", "/resources/css/style.css", "https://code.jquery.com/jquery-3.6.0.js", "https://code.jquery.com/ui/1.13.2/jquery-ui.js", "https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.js", "https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.js", "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css", "/**/*.css");
     }
 }

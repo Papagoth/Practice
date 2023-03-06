@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -11,19 +12,19 @@
 <div>
 
 
-    <form action="/login" method="post">
+    <form:form action="/login" method="POST">
         <div>
             <input type="text" name="username" path="username" id="username" placeholder="Введите логин"/>
             <errors path="username"></errors>
-            ${usernameError}
+                ${usernameError}
         </div>
         <div>
             <input type="password" name="password" path="password" id="password" placeholder="введите пароль"/>
             <errors path="password"></errors>
-            ${passwordError}
+                ${passwordError}
         </div>
         <button type="submit">Авторизироваться</button>
-    </form>
+    </form:form>
     <a class="ssilka" href="<c:url value="/registration"/>"> Регистрация</a>
 </div>
 
