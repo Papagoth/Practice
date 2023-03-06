@@ -7,7 +7,7 @@
     <meta charset="utf-8">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
- 
+
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
@@ -100,8 +100,10 @@
                 $("#borndate").val(data.borndate);
                 $("#fio").val(data.fio);
                 for (let i = 0; i < data.subjects.length; i++) {
-                    $('#subjects').prepend('<option value=' + JSON.stringify(data.subjects[i]) + '>' + data.subjects[i].name + '</option>');
+                    //$('#subjects').prepend('<option  value=' + JSON.stringify(data.subjects[i]) + ' selected = "selected">' + data.subjects[i].name + '</option>');
                     $('#subjects option:contains("' + data.subjects[i].name + '")').prop('selected', true);
+                    $('#subjects').multiSelect('select', data.subjects[i].name);
+                    //console.log($('#subjects option:contains("' + data.subjects[i].name + '")').attr('data-attr'));
                 }
                 document.getElementById('teacherForm').removeAttribute("class");
             });
@@ -112,7 +114,7 @@
             $("#fio").val('');
             $("#speciality").val('');
             $("#borndate").val('');
-            $("#subjects").val('');
+            $("#subjects").multiSelect('deselect_all');
             document.getElementById('teacherForm').removeAttribute("class");
         }
 
@@ -179,13 +181,12 @@
             let str = '[';
             for (let i = 0; i < $('#subjects').val().length; i++) {
                 if (i == $('#subjects').val().length - 1) {
-                    str += $('#subjects').val()[i];
+                    str += $("#" + $('#subjects').val()[i] + "").attr('data-attr');
                 } else {
-                    str += $('#subjects').val()[i] + ',';
+                    str += $("#" + $('#subjects').val()[i] + "").attr('data-attr') + ',';
                 }
             }
             str += ']';
-
             if ($("#teacherForm").valid()) {
                 $.ajax(
                     {
@@ -213,8 +214,7 @@
                                 }
                             }
                             if ($("#" + data.id + "").length) {
-                                $("#" + data.id + "").remove();
-
+                                $("#" + data.id + "").remove()
                                 table.row.add({
                                     "DT_RowId": data.id,
                                     "fio": data.fio,
@@ -223,8 +223,7 @@
                                     "borndate": data.borndate,
                                     "ChangeButton": '<button type="button" class="img_button" onclick="show_teacher(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
                                     "DeleteButton": '<a class="ssilka"href="/DeleteTeacher/' + data.id + '">Удалить учителя</a>'
-                                }).draw();
-
+                                }).draw()
                                 //$('#myTable').append('<tr   id= "' + data.id + '"><td>' + data.fio + '</td><td>' + data.borndate + '</td><td>' + string + '</td><td>' + data.speciality + '</td><td><button type="button" class="img_button" onclick="show_teacher(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteTeacher/' + data.id + '">Удалить учителя</a></td></tr>');
                             } else {
                                 table.row.add({
@@ -243,6 +242,7 @@
                 )
             }
         }
+
     </script>
 </head>
 
@@ -262,7 +262,8 @@
                 <div><label class="subject_label">ФИО</label><input type='text' name='fio' id='fio'/></div>
                 <select name="subjects" multiple="multiple" id="subjects">
                     <c:forEach items='${subjectList}' var='subjects'>
-                        <option value='${subjects}'>${subjects.name}</option>
+                        <option id='${subjects.name}' value='${subjects.name}'
+                                data-attr='${subjects}'>${subjects.name}</option>
                     </c:forEach>
                 </select>
                 <div>
