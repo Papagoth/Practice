@@ -406,7 +406,7 @@ input {
 }
 
 .ms-container {
-    background: transparent url('/src/main/webapp/resources/image/image_1.png') no-repeat 50% 50%;
+    background: transparent url('/src/main/webapp/resources/image/switch.png') no-repeat 50% 50%;
     width: 370px;
 }
 

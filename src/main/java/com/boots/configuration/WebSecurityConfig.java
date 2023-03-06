@@ -30,9 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")//глобальная константа!
                 .and()
                 .logout()
-                .permitAll()
-                .permitAll()
-                .logoutSuccessUrl("/");
+                .permitAll();
     }
 
     @Override

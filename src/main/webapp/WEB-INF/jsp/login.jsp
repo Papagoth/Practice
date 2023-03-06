@@ -9,23 +9,35 @@
 </head>
 <body>
 
-<div>
-
-
-    <form:form action="/login" method="POST">
-        <div>
-            <input type="text" name="username" path="username" id="username" placeholder="Введите логин"/>
-            <errors path="username"></errors>
-                ${usernameError}
+<div class="size1">
+    <div class="nav_color">
+        <div class="size2">
+            <div class="header-margin">
+                <div class="roboto">
+                    <nav class="header-nav">
+                        <label>Авторизация</label>
+                    </nav>
+                </div>
+            </div>
         </div>
-        <div>
-            <input type="password" name="password" path="password" id="password" placeholder="введите пароль"/>
-            <errors path="password"></errors>
-                ${passwordError}
-        </div>
-        <button type="submit">Авторизироваться</button>
-    </form:form>
-    <a class="ssilka" href="<c:url value="/registration"/>"> Регистрация</a>
+    </div>
+    <div class="size2">
+        <form:form action="/login" method="POST">
+            <div>
+                <input type="text" name="username" path="username" id="username" placeholder="Введите логин"/>
+                <form:errors path="username"></form:errors>
+                    ${usernameError}
+            </div>
+            <div>
+                <input type="password" name="password" path="password" id="password" placeholder="введите пароль"/>
+                <form:errors path="password"></form:errors>
+                    ${passwordError}
+            </div>
+            <button type="submit">Авторизироваться</button>
+        </form:form>
+        <a class="ssilka" href="<c:url value="/registration"/>"> Регистрация</a>
+    </div>
+    <jsp:include page="footer.jsp"/>
 </div>
 
 </body>
