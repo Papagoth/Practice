@@ -23,7 +23,7 @@
     <script>
 
         $(function () {
-//Живой поиск
+//Живо поиск
             $('.who').bind("change keyup input click", function () {
                 if (this.value.length >= 2) {
                     $.ajax({
@@ -49,7 +49,7 @@
                 $(".who").blur(); //Убираем фокус с input
             })
 
-//При выборе результата поиска, прячем список и заносим выбранный результат в input
+//При ыборе результата поиска, прячем список и заносим выбранный результат в input
             $(".search_result").on("click", "li", function () {
                 //s_user = $(this).text();
                 //$(".who").val(s_user).attr('disabled', 'disabled'); //деактивируем input, если нужно
@@ -96,6 +96,7 @@
         function show_teacher(id) {
             $.get('/get_oneteacher/' + id, function (data) {
                 $("#id").val(data.id);
+                $("#subjects").multiSelect('deselect_all');
                 $("#speciality").val(data.speciality);
                 $("#borndate").val(data.borndate);
                 $("#fio").val(data.fio);
