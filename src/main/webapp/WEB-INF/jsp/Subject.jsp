@@ -90,16 +90,40 @@
                 ]
             });
             show_allsubject();
-            // show_allparty();
+
+
+            $("#subjectForm").on('submit', function (e) {
+                e.preventDefault();
+                $("#span_name").text("");
+                if ($("#subjectForm").valid()) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/addSubject",
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({
+                            id: $("#id").val(),
+                            name: $("#name").val(),
+                            party: JSON.parse($(".who").text()),
+                            studyingtime: $("#studyingtime").val()
+                        }),
+                        dataType: 'json',
+                        async: true
+                    }).done(function () {
+                        var table = $('#myTable').DataTable();
+                        table.clear();
+                        show_allsubject();
+                        document.getElementById('subjectForm').classList.add('visible');
+                    }).fail(function (data) {
+                        if (data.status == 404) {
+                            $("#span_name").text("Название должно быть уникальным");
+                        }
+                    });
+                }
+            });
+
+
         });
 
-        //function show_allparty() {
-        //    $.get('/get_allparty', function (data) {
-        //        for (let i = 0; i < data.length; i++) {
-        //            $('#party').append('<option value=' + JSON.stringify(data[i]) + '>' + data[i].name + '</option>');
-        //        }
-        //    });
-        //}
 
         function send() {
             document.getElementById('subjectForm').removeAttribute("class");
@@ -145,59 +169,6 @@
             });
         })
 
-        function send_subject() {
-            $("#span_name").text("");
-            if ($("#subjectForm").valid()) {
-                $.ajax(
-                    {
-                        url: "/AddSubject",
-                        dataType: 'json',
-                        type: 'POST',
-                        cache: false,
-                        contentType: 'application/json',
-                        data: JSON.stringify({
-                            id: $("#id").val(),
-                            name: $("#name").val(),
-                            party: JSON.parse($(".who").text()),
-                            studyingtime: $("#studyingtime").val()
-                        }),
-                        success: function (data) {
-                            var table = $('#myTable').DataTable();
-                            document.getElementById('subjectForm').classList.add('visible');
-                            if ($("#" + data.id + "").length) {
-                                $("#" + data.id + "").remove();
-                                table.row.add({
-                                    "DT_RowId": data.id,
-                                    "name": data.name,
-                                    "party": data.party.name,
-                                    "studyingtime": data.studyingtime,
-                                    "ChangeButton": '<button type="button" class="img_button" onclick="show_onesubject(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
-                                    "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a>'
-                                }).draw();
-                                //$('#myTable').append('<tr><td>' + data.name + '</td><td>' + data.party.name + '</td><td>' + data.studyingtime + '</td><td><button type="button" onclick="show_onesubject(' + data.id + ')"class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteSubject/' + data.id + '">Удалить предмет</a></td></tr>');
-
-                            } else {
-                                table.row.add({
-                                    "DT_RowId": data.id,
-                                    "name": data.name,
-                                    "party": data.party.name,
-                                    "studyingtime": data.studyingtime,
-                                    "ChangeButton": '<button type="button" class="img_button" onclick="show_onesubject(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
-                                    "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a>'
-                                }).draw();
-                                //$('#myTable').append('<tr><td>' + data.name + '</td><td>' + data.party.name + '</td><td>' + data.studyingtime + '</td><td><button type="button" onclick="show_onesubject(' + data.id + ')"class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteSubject/' + data.id + '">Удалить предмет</a></td></tr>');
-
-                            }
-                        },
-                        error: function (data) {
-                            if (data.status == 404) {
-                                $("#span_name").text("Навзвание должен быть уникальным");
-                            }
-                        }
-                    }
-                )
-            }
-        }
 
         function show_onesubject(id) {
             $.get('/get_onesubject/' + id, function (data) {
@@ -232,11 +203,9 @@
                 <input ENGINE="text" name="referal" placeholder="Живой поиск" value='' class="who" autocomplete="off">
                 <ul class="search_result"></ul>
                 <div>
-                    <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                    src="/resources/image/back.png">
-                    </button>
-                    <button type="button " onclick="send_subject()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                            src="/resources/image/disc.png">
+                    <img class="icon" alt="logo_1" onclick="hide()" src="/resources/image/back.png">
+                    <button type="button " class="img_button"><img class="icon" alt="logo_1"
+                                                                   src="/resources/image/disc.png">
                     </button>
                 </div>
             </form>

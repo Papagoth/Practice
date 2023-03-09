@@ -95,7 +95,7 @@
         })
 
         function show_onestudent(id) {
-            $.get('/get_onestudent/' + id, function (data) {
+            $.get('/getOneStudent/' + id, function (data) {
                 $("#id").val(id);
                 $("#fio").val(data.fio);
                 $("#borndata").val(data.borndata);
@@ -109,7 +109,7 @@
 
 
         function show_allstudent() {
-            $.get('/get_allstudent', function (data) {
+            $.get('/getAllStudent', function (data) {
                 var table = $('#myTable').DataTable();
                 for (let i = 0; i < data.length; i++) {
 
@@ -152,7 +152,71 @@
                 ]
             });
             show_allstudent();
-            // show_allparty();
+
+
+            $("#studentForm").on('submit', function (e) {
+                e.preventDefault();
+                $("#span_name").text("");
+                if ($("#studentForm").valid()) {
+                    $.ajax({
+                        type: 'POST',
+                        url: "/addStudent",
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({
+                            id: $("#id").val(),
+                            fio: $("#fio").val(),
+                            party: JSON.parse($(".who").text()),
+                            borndata: $("#borndata").val(),
+                            sticket: $("#sticket").val()
+                        }),
+                        dataType: 'json',
+                        async: true
+                    }).done(function () {
+                        var table = $('#myTable').DataTable();
+                        table.clear();
+                        show_allstudent();
+                        document.getElementById('studentForm').classList.add('visible');
+
+                        // var table = $('#myTable').DataTable();
+                        // document.getElementById('studentForm').classList.add('visible');
+                        // if ($("#" + data.id + "").length) {
+                        //     console.log("сработало");
+                        //     console.log(data.id);
+
+
+                        //     table.row.add({
+                        //         "DT_RowId": data.id,
+                        //         "fio": data.fio,
+                        //         "party": data.party.name,
+                        //         "sticket": data.sticket,
+                        //         "borndata": data.borndata,
+                        //         "ChangeButton": '<button type="button" class="img_button" onclick="show_onestudent(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                        //         "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a>'
+                        //     }).draw();
+                        //     //$('#myTable').append('<tr><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
+                        // } else {
+                        //    console.log("не сработало")
+                        //    table.row.add({
+                        //        "DT_RowId": data.id,
+                        //        "fio": data.fio,
+                        //        "party": data.party.name,
+                        //        "sticket": data.sticket,
+                        //        "borndata": data.borndata,
+                        //        "ChangeButton": '<button type="button" class="img_button" onclick="show_onestudent(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                        //        "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a>'
+                        //    }).draw();
+
+                        //     //$('#myTable').append('<tr ><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
+                        // }
+                    }).fail(function (data) {
+                        if (data.status == 404) {
+                            $("#span_name").text("Название должно быть уникальным");
+                        }
+                    });
+                }
+            });
+
+
         });
 
         //function show_allparty() {
@@ -173,62 +237,6 @@
             $('.who').val('');
         }
 
-        function send_student() {
-            $("#span_name").text("");
-            if ($("#studentForm").valid()) {
-                $.ajax(
-                    {
-                        url: "/AddStudent",
-                        dataType: 'json',
-                        type: 'POST',
-                        cache: false,
-                        contentType: 'application/json',
-                        data: JSON.stringify({
-                            id: $("#id").val(),
-                            fio: $("#fio").val(),
-                            party: JSON.parse($(".who").text()),
-                            borndata: $("#borndata").val(),
-                            sticket: $("#sticket").val()
-                        }),
-                        success: function (data) {
-                            var table = $('#myTable').DataTable();
-                            document.getElementById('studentForm').classList.add('visible');
-                            if ($("#" + data.id + "").length) {
-                                $("#" + data.id + "").remove();
-                                table.row.add({
-                                    "DT_RowId": data.id,
-                                    "fio": data.fio,
-                                    "party": data.party.name,
-                                    "sticket": data.sticket,
-                                    "borndata": data.borndata,
-                                    "ChangeButton": '<button type="button" class="img_button" onclick="show_onestudent(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
-                                    "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a>'
-                                }).draw();
-                                //$('#myTable').append('<tr><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
-                            } else {
-                                table.row.add({
-                                    "DT_RowId": data.id,
-                                    "fio": data.fio,
-                                    "party": data.party.name,
-                                    "sticket": data.sticket,
-                                    "borndata": data.borndata,
-                                    "ChangeButton": '<button type="button" class="img_button" onclick="show_onestudent(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
-                                    "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a>'
-                                }).draw();
-
-                                //$('#myTable').append('<tr ><td>' + data.fio + '</td><td>' + data.party.name + '</td><td>' + data.sticket + '</td><td>' + data.borndata + '</td><td><button type="button" onclick="show_onestudent(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data.id + '">Удалить студента</a></td></tr>');
-                            }
-                        },
-                        error: function (data) {
-                            if (data.status == 404) {
-                                $("#span_name").text("Номер должен быть уникальным");
-                            }
-                        }
-                    }
-                )
-            }
-        }
-
         function hide() {
             document.getElementById('studentForm').classList.add('visible');
         }
@@ -244,7 +252,7 @@
 
     <div class="roboto">
         <div class="size2">
-            <form id="studentForm" class="visible">
+            <form id="studentForm" class="visible" action="/addStudent">
                 <div><input type='hidden' name='id' id='id'/></div>
                 <div><label class="student_label">ФИО студента</label><input type='text' name='fio' id='fio'/></div>
                 <div><label class="student_label">Номер билета</label><input type='number' name='sticket' id='sticket'/>
@@ -257,11 +265,11 @@
                 <ul class="search_result"></ul>
 
                 <div>
-                    <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                    src="/resources/image/back.png">
-                    </button>
-                    <button type="button " onclick="send_student()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                            src="/resources/image/disc.png">
+                    <img class="icon" onclick="hide()" alt="logo_1"
+                         src="/resources/image/back.png">
+
+                    <button type="button " class="img_button"><img class="icon" alt="logo_1"
+                                                                   src="/resources/image/disc.png">
                     </button>
                 </div>
             </form>

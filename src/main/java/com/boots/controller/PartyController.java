@@ -5,13 +5,13 @@ import com.boots.entity.Party;
 import com.boots.service.PartyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,12 +21,13 @@ public class PartyController {
     private PartyService partyService;
 
     @GetMapping(StringConstant.SLPARTY)
+    @PreAuthorize("hasAnyAuthority('USER')")
     public String party() {
         return StringConstant.PARTY;
     }
 
-    @PostMapping(StringConstant.SLADDPARTY)
-    public ResponseEntity<Party> addparty(@RequestBody Party party) {
+    @PostMapping(value = "/addParty", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Party> addparty(@ModelAttribute Party party) {
         try {
             partyService.save(party);
             return new ResponseEntity<>(partyService.save(party), HttpStatus.OK);
@@ -35,12 +36,12 @@ public class PartyController {
         }
     }
 
-    @GetMapping("/get_allparty")
+    @GetMapping("/getAllParty")
     public ResponseEntity<List<Party>> getParty() {
         return new ResponseEntity<List<Party>>(partyService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/get_oneparty/{id}")
+    @GetMapping("/getOneParty/{id}")
     public ResponseEntity<Party> getOneParty(@PathVariable("id") Long id) {
         return new ResponseEntity<>(partyService.findPartyById(id), HttpStatus.OK);
     }

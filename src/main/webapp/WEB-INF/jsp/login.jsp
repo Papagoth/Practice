@@ -25,14 +25,25 @@
         <form:form action="/login" method="POST">
             <div>
                 <input type="text" name="username" path="username" id="username" placeholder="Введите логин"/>
-                <form:errors path="username"></form:errors>
-                    ${usernameError}
+                <errors path="username"></errors>
+
             </div>
             <div>
                 <input type="password" name="password" path="password" id="password" placeholder="введите пароль"/>
-                <form:errors path="password"></form:errors>
-                    ${passwordError}
+                <errors path="password"></errors>
+
+
             </div>
+            <c:if test="${param.error != null}">
+                <p>
+                    Неверный логин или пароль.
+                </p>
+            </c:if>
+            <c:if test="${param.logout != null}">
+                <p>
+                    Вы уже авторизированы.
+                </p>
+            </c:if>
             <button type="submit">Авторизироваться</button>
         </form:form>
         <a class="ssilka" href="<c:url value="/registration"/>"> Регистрация</a>

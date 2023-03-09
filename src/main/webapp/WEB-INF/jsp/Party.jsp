@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="/resources/css/style.css" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <%--<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>--%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.js"></script>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.css"/>
@@ -18,7 +18,7 @@
     <script>
 
         function show_party(id) {
-            $.get('/get_oneparty/' + id, function (data) {
+            $.get('/getOneParty/' + id, function (data) {
                 $("#id").val(id);
                 $("#name").val(data.name);
                 $("#course").val(data.course);
@@ -34,7 +34,7 @@
         }
 
         function show_allparty() {
-            $.get('/get_allparty', function (data) {
+            $.get('/getAllParty', function (data) {
                 var table = $('#myTable').DataTable();
                 for (let i = 0; i < data.length; i++) {
                     //$('#myTable').append('<tr><td>' + data[i].name + '</td><td>' + data[i].course + '</td><td><button type="button" class="img_button" onclick="show_party(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data[i].id + '">Удалить группу</a></td></tr>');
@@ -69,6 +69,55 @@
                 ]
             });
             show_allparty();
+            $("#partyForm").on('submit', function (e) {
+                e.preventDefault();
+                $("#span_name").text("");
+                if ($("#partyForm").valid()) {
+                    $.post('/addParty', {
+                        id: $("#id").val(),
+                        name: $("#name").val(),
+                        course: $("#course").val()
+                    }, null, "json")
+                        .done(function () {
+
+                            var table = $('#myTable').DataTable();
+                            table.clear();
+                            show_allparty();
+                            document.getElementById('partyForm').classList.add('visible');
+
+                            //  document.getElementById('partyForm').classList.add('visible');
+                            //  var table = $('#myTable').DataTable();
+                            //  if ($("#" + data.id + "").length) {
+                            //      $("#" + data.id + "").remove();
+                            //      //$('#myTable').append('<tr><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
+                            //      table.row.add({
+                            //          "DT_RowId": data.id,
+                            //          "name": data.name,
+                            //          "course": data.course,
+                            //          "ChangeButton": '<button type="button" class="img_button" onclick="show_party(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                            //          "DeleteButton": '<a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a>'
+                            //      }).draw();
+                            //  } else {
+                            //      table.row.add({
+                            //          "DT_RowId": data.id,
+                            //          "name": data.name,
+                            //          "course": data.course,
+                            //          "ChangeButton": '<button type="button" class="img_button" onclick="show_party(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                            //          "DeleteButton": '<a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a>'
+                            //      }).draw();
+                            //      //$('#myTable').append('<tr><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
+                            //  }
+
+
+                        }).fail(function (data) {
+                        if (data.status == 404) {
+                            $("#span_name").text("Название должно быть уникальным");
+                        }
+                    });
+                }
+            });
+
+
         });
 
 
@@ -104,55 +153,6 @@
             });
         })
 
-        function send_party() {
-            $("#span_name").text("");
-            if ($("#partyForm").valid()) {
-                $.ajax(
-                    {
-                        url: '/AddParty',
-                        dataType: 'json',
-                        type: 'POST',
-                        cache: false,
-                        contentType: 'application/json',
-                        data: JSON.stringify({
-                            id: $("#id").val(),
-                            name: $("#name").val(),
-                            course: $("#course").val()
-                        }),
-                        success: function (data) {
-                            document.getElementById('partyForm').classList.add('visible');
-                            var table = $('#myTable').DataTable();
-                            if ($("#" + data.id + "").length) {
-                                $("#" + data.id + "").remove();
-                                //$('#myTable').append('<tr><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
-                                table.row.add({
-                                    "DT_RowId": data.id,
-                                    "name": data.name,
-                                    "course": data.course,
-                                    "ChangeButton": '<button type="button" class="img_button" onclick="show_party(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
-                                    "DeleteButton": '<a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a>'
-                                }).draw();
-                            } else {
-                                table.row.add({
-                                    "DT_RowId": data.id,
-                                    "name": data.name,
-                                    "course": data.course,
-                                    "ChangeButton": '<button type="button" class="img_button" onclick="show_party(' + data.id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
-                                    "DeleteButton": '<a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a>'
-                                }).draw();
-                                //$('#myTable').append('<tr><td>' + data.name + '</td><td>' + data.course + '</td><td><button type="button" onclick="show_party(' + data.id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteParty/' + data.id + '">Удалить группу</a></td></tr>');
-                            }
-                        },
-                        error: function (data) {
-                            if (data.status == 404) {
-                                $("#span_name").text("Название должно быть уникальным");
-                            }
-
-                        }
-                    }
-                )
-            }
-        }
 
         function hide() {
             document.getElementById('partyForm').classList.add('visible');
@@ -167,7 +167,7 @@
 
     <div class="roboto">
         <div class="size2">
-            <form id="partyForm" class="visible">
+            <form id="partyForm" class="visible" action="/addParty">
                 <div><input type='hidden' name='id' id='id'/></div>
                 <div><label class="party_label">Название группы</label>
 
@@ -177,11 +177,9 @@
                 <div><label class="party_label">Название курса</label><input type='text' name='course' id='course'/>
                 </div>
                 <div>
-                    <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                    src="/resources/image/back.png">
-                    </button>
-                    <button type="button " onclick="send_party()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                          src="/resources/image/disc.png">
+                    <img class="icon" alt="logo_1" src="/resources/image/back.png" onclick="hide()">
+                    <button type="submit" class="img_button"><img class="icon" alt="logo_1"
+                                                                  src="/resources/image/disc.png">
                     </button>
                 </div>
             </form>

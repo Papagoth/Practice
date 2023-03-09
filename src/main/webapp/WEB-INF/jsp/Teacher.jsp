@@ -148,6 +148,50 @@
                 ]
             });
             show_allteacher();
+
+
+            $("#teacherForm").on('submit', function (e) {
+
+                e.preventDefault();
+
+                let str = '[';
+                for (let i = 0; i < $('#subjects').val().length; i++) {
+                    if (i == $('#subjects').val().length - 1) {
+                        str += $("#" + $('#subjects').val()[i] + "").attr('data-attr');
+                    } else {
+                        str += $("#" + $('#subjects').val()[i] + "").attr('data-attr') + ',';
+                    }
+                }
+                str += ']';
+
+
+                if ($("#teacherForm").valid()) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "/addTeacher",
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify({
+                            id: $("#id").val(),
+                            speciality: $("#speciality").val(),
+                            fio: $("#fio").val(),
+                            borndate: $("#borndate").val(),
+                            subjects: JSON.parse(str)
+                        }),
+                        dataType: 'json',
+                        async: true
+                    }).always(function () {
+                        var table = $('#myTable').DataTable();
+                        table.clear();
+                        show_allteacher();
+                        document.getElementById('teacherForm').classList.add('visible');
+                    });
+
+
+                }
+            });
+
+
         });
 
         function show_allteacher() {
@@ -273,11 +317,10 @@
                     <ul class="search_result"></ul>
                 </div>
 
-                <button type="button " onclick="hide()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                src="/resources/image/back.png">
-                </button>
-                <button type="button " onclick="send_teacher()" class="img_button"><img class="icon" alt="logo_1"
-                                                                                        src="/resources/image/disc.png">
+                <img class="icon" onclick="hide()" alt="logo_1" src="/resources/image/back.png">
+
+                <button type="button " class="img_button"><img class="icon" alt="logo_1"
+                                                               src="/resources/image/disc.png">
                 </button>
             </form>
         </div>

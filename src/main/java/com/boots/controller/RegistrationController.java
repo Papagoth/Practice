@@ -25,9 +25,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, BindingResult bindingResult)//разбить на классы!
-    {
-
+    public String addUser(User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "registration";
         }

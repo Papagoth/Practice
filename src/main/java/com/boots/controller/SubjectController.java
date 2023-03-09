@@ -9,6 +9,8 @@ import com.boots.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,12 +28,14 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @GetMapping(StringConstant.SLSUBJECT)
+
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String subjects(Model model) {
         model.addAttribute("subject", subjectService.findAll());
         return StringConstant.SUBJECT;
     }
 
-    @PostMapping(StringConstant.SLADDSUBJECT)
+    @PostMapping("/addSubject")
     public ResponseEntity<Subject> addSubject(@RequestBody Subject subject) {
         try {
 
