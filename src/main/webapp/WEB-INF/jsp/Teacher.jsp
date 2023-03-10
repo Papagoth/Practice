@@ -88,7 +88,7 @@
         }
 
         $(document).ready(function () {
-
+            $("#subjects").multiSelect();
             var table = $('#myTable').DataTable({
                 "columns": [
                     {

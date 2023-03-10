@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.Map;
@@ -25,11 +26,15 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, Model model) {
+    public String addUser(User user, Model model, @RequestParam(name = "role", required = false) String role) {
         try {
             user.setActive(true);
-            //user.setRoles(Collections.singleton(Role.ADMIN));
-            user.setRoles(Collections.singleton(Role.USER));
+            if (role.equals("ADMIN")) {
+
+                user.setRoles(Collections.singleton(Role.ADMIN));
+            } else {
+                user.setRoles(Collections.singleton(Role.USER));
+            }
             userRepo.save(user);
             return "redirect:/login";
         } catch (Exception e) {

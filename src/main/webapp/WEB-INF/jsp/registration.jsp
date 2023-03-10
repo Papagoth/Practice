@@ -15,13 +15,19 @@
                    modelAttribute="userForm">
             <div>
                 <input type="text" name="username" path="username" id="username" placeholder="Введите логин"/>
-               
+
                     ${usernameError}
             </div>
             <div>
                 <input type="password" name="password" path="password" id="password" placeholder="введите пароль"/>
                 <errors path="password"></errors>
                     ${passwordError}
+                <div>
+                    <select name="role" id="role">
+                        <option value='USER'>Ученик</option>
+                        <option value='ADMIN'>Учитель</option>
+                    </select>
+                </div>
             </div>
             <button type="submit">Добавить</button>
         </form:form>
