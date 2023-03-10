@@ -9,6 +9,19 @@
 </head>
 <body>
 <div class="size1">
+
+    <div class="nav_color">
+        <div class="size2">
+            <div class="header-margin">
+                <div class="roboto">
+                    <nav class="header-nav">
+                        <label>Регистрация</label>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="size2">
 
         <form:form action="${pageContext.request.contextPath}/registration" method="post" class="form"
@@ -31,6 +44,7 @@
             </div>
             <button type="submit">Добавить</button>
         </form:form>
+        <a class="ssilka" href="<c:url value="/login"/>"> Назад</a>
     </div>
     <jsp:include page="footer.jsp"/>
 </div>

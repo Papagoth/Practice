@@ -34,7 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")//глобальная константа!
                 .and()
                 .logout()
-                .permitAll().and().exceptionHandling().accessDeniedPage("/error");
+                .permitAll()
+                .and().exceptionHandling().accessDeniedPage("/error");
     }
 
     @Override

@@ -10,6 +10,8 @@
 <body>
 
 <div class="size1">
+
+
     <div class="nav_color">
         <div class="size2">
             <div class="header-margin">
@@ -21,6 +23,7 @@
             </div>
         </div>
     </div>
+
     <div class="size2">
         <form:form action="/login" method="POST">
             <div>
