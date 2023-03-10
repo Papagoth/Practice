@@ -28,7 +28,6 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @GetMapping(StringConstant.SLSUBJECT)
-
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String subjects(Model model) {
         model.addAttribute("subject", subjectService.findAll());
@@ -46,19 +45,14 @@ public class SubjectController {
         }
     }
 
-    @GetMapping("/get_allsubject")
+    @GetMapping("/getAllSubject")
     public ResponseEntity<List<Subject>> getStudent() {
         return new ResponseEntity<>(subjectService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/get_onesubject/{id}")
+    @GetMapping("/getOneSubject/{id}")
     public ResponseEntity<Subject> getOneParty(@PathVariable("id") Long id) {
         return new ResponseEntity<>(subjectService.findSubjectsById(id), HttpStatus.OK);
-    }
-
-    @GetMapping("/Subject_Find/{name}")
-    public ResponseEntity<List<Subject>> findParty(@PathVariable("name") String name) {
-        return new ResponseEntity<>(subjectService.findAllByNameContainingOrderByName(name), HttpStatus.OK);
     }
 
 

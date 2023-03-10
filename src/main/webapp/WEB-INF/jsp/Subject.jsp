@@ -22,7 +22,7 @@
             $('.who').bind("change keyup input click", function () {
                 if (this.value.length >= 2) {
                     $.ajax({
-                        url: "/Party_Find/" + this.value, //Путь к обработчику
+                        url: "/partyFind/" + this.value, //Путь к обработчику
                         type: 'get',
                         cache: false,
                         success: function (data) {
@@ -51,8 +51,8 @@
         })
 
 
-        function show_allsubject() {
-            $.get("/get_allsubject", function (data) {
+        function showAllSubject() {
+            $.get("/getAllSubject", function (data) {
                 var table = $('#myTable').DataTable();
                 for (let i = 0; i < data.length; i++) {
                     table.row.add({
@@ -60,7 +60,7 @@
                         "name": data[i].name,
                         "party": data[i].party.name,
                         "studyingtime": data[i].studyingtime,
-                        "ChangeButton": '<button type="button" class="img_button" onclick="show_onesubject(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                        "ChangeButton": '<button type="button" class="img_button" onclick="showOneSubject(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
                         "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data[i].id + '">Удалить студента</a>'
                     }).draw();
                     //$('#myTable').append('<tr><td>' + data[i].name + '</td><td>' + data[i].party.name + '</td><td>' + data[i].studyingtime + '</td><td><button type="button" onclick="show_onesubject(' + data[i].id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteSubject/' + data[i].id + '">Удалить предмет</a></td></tr>');
@@ -89,7 +89,7 @@
                     }
                 ]
             });
-            show_allsubject();
+            showAllSubject();
 
 
             $("#subjectForm").on('submit', function (e) {
@@ -111,7 +111,7 @@
                     }).done(function () {
                         var table = $('#myTable').DataTable();
                         table.clear();
-                        show_allsubject();
+                        showAllSubject();
                         document.getElementById('subjectForm').classList.add('visible');
                     }).fail(function (data) {
                         if (data.status == 404) {
@@ -170,8 +170,8 @@
         })
 
 
-        function show_onesubject(id) {
-            $.get('/get_onesubject/' + id, function (data) {
+        function showOneSubject(id) {
+            $.get('/getOneSubject/' + id, function (data) {
                 $("#id").val(id);
                 $("#name").val(data.name);
                 $("#studyingtime").val(data.studyingtime);

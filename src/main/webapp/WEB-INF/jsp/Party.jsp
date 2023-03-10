@@ -17,7 +17,7 @@
 
     <script>
 
-        function show_party(id) {
+        function showParty(id) {
             $.get('/getOneParty/' + id, function (data) {
                 $("#id").val(id);
                 $("#name").val(data.name);
@@ -33,7 +33,7 @@
             document.getElementById('partyForm').removeAttribute("class");
         }
 
-        function show_allparty() {
+        function showAllParty() {
             $.get('/getAllParty', function (data) {
                 var table = $('#myTable').DataTable();
                 for (let i = 0; i < data.length; i++) {
@@ -42,7 +42,7 @@
                         "DT_RowId": data[i].id,
                         "name": data[i].name,
                         "course": data[i].course,
-                        "ChangeButton": '<button type="button" class="img_button" onclick="show_party(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                        "ChangeButton": '<button type="button" class="img_button" onclick="showParty(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
                         "DeleteButton": '<a class="ssilka"href="/DeleteParty/' + data[i].id + '">Удалить группу</a>'
                     }).draw();
 
@@ -68,7 +68,7 @@
                     }
                 ]
             });
-            show_allparty();
+            showAllParty();
             $("#partyForm").on('submit', function (e) {
                 e.preventDefault();
                 $("#span_name").text("");
@@ -82,7 +82,7 @@
 
                             var table = $('#myTable').DataTable();
                             table.clear();
-                            show_allparty();
+                            showAllParty();
                             document.getElementById('partyForm').classList.add('visible');
 
                             //  document.getElementById('partyForm').classList.add('visible');

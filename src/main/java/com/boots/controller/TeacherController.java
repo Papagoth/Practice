@@ -41,12 +41,12 @@ public class TeacherController {
         return StringConstant.TEACHER;
     }
 
-    @GetMapping("/get_allteacher")
+    @GetMapping("/getAllTeacher")
     public ResponseEntity<List<Teacher>> getTeacher() {
         return new ResponseEntity<List<Teacher>>(teacherService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/get_oneteacher/{id}")
+    @GetMapping("/getOneTeacher/{id}")
     public ResponseEntity<Teacher> getOneTeacher(@PathVariable("id") Long id) {
         return new ResponseEntity<>(teacherService.findTeacherById(id), HttpStatus.OK);
     }

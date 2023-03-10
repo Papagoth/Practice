@@ -25,15 +25,18 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+    public String addUser(User user, Model model) {
+        try {
+            user.setActive(true);
+            //user.setRoles(Collections.singleton(Role.ADMIN));
+            user.setRoles(Collections.singleton(Role.USER));
+            userRepo.save(user);
+            return "redirect:/login";
+        } catch (Exception e) {
+            model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
             return "registration";
         }
-        user.setActive(true);
-        //user.setRoles(Collections.singleton(Role.ADMIN));
-        user.setRoles(Collections.singleton(Role.USER));
-        userRepo.save(user);
-        return "redirect:/login";
+
 
     }
 

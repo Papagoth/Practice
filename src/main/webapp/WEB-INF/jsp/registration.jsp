@@ -14,13 +14,13 @@
         <form:form action="${pageContext.request.contextPath}/registration" method="post" class="form"
                    modelAttribute="userForm">
             <div>
-                <form:input type="text" name="username" path="username" id="username" placeholder="Введите логин"/>
-                <form:errors path="username"></form:errors>
+                <input type="text" name="username" path="username" id="username" placeholder="Введите логин"/>
+               
                     ${usernameError}
             </div>
             <div>
-                <form:input type="password" name="password" path="password" id="password" placeholder="введите пароль"/>
-                <form:errors path="password"></form:errors>
+                <input type="password" name="password" path="password" id="password" placeholder="введите пароль"/>
+                <errors path="password"></errors>
                     ${passwordError}
             </div>
             <button type="submit">Добавить</button>

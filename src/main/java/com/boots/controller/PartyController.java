@@ -46,7 +46,7 @@ public class PartyController {
         return new ResponseEntity<>(partyService.findPartyById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/Party_Find/{name}")
+    @GetMapping("/partyFind/{name}")
     public ResponseEntity<List<Party>> findParty(@PathVariable("name") String name) {
         return new ResponseEntity<>(partyService.findAllByNameLikeOrderByName(name), HttpStatus.OK);
     }

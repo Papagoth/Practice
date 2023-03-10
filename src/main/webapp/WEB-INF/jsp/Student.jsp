@@ -21,7 +21,7 @@
             $('.who').bind("change keyup input click", function () {
                 if (this.value.length >= 2) {
                     $.ajax({
-                        url: "/Party_Find/" + this.value, //Путь к обработчику
+                        url: "/partyFind/" + this.value, //Путь к обработчику
                         type: 'get',
                         cache: false,
                         success: function (data) {
@@ -94,7 +94,7 @@
             });
         })
 
-        function show_onestudent(id) {
+        function showOneStudent(id) {
             $.get('/getOneStudent/' + id, function (data) {
                 $("#id").val(id);
                 $("#fio").val(data.fio);
@@ -108,7 +108,7 @@
         }
 
 
-        function show_allstudent() {
+        function showAllStudent() {
             $.get('/getAllStudent', function (data) {
                 var table = $('#myTable').DataTable();
                 for (let i = 0; i < data.length; i++) {
@@ -119,7 +119,7 @@
                         "party": data[i].party.name,
                         "sticket": data[i].sticket,
                         "borndata": data[i].borndata,
-                        "ChangeButton": '<button type="button" class="img_button" onclick="show_onestudent(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
+                        "ChangeButton": '<button type="button" class="img_button" onclick="showOneStudent(' + data[i].id + ')"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button>',
                         "DeleteButton": '<a class="ssilka"href="/DeleteStudent/' + data[i].id + '">Удалить студента</a>'
                     }).draw();
                     //$('#myTable').append('<tr><td>' + data[i].fio + '</td><td>' + data[i].party.name + '</td><td>' + data[i].sticket + '</td><td>' + data[i].borndata + '</td><td><button type="button" onclick="show_onestudent(' + data[i].id + ')" class="img_button"><img class="icon" alt="logo_1"src="/resources/image/recycle.png"/></button></td><td><a class="ssilka"href="/DeleteStudent/' + data[i].id + '">Удалить студента</a></td></tr>');
@@ -151,7 +151,7 @@
                     }
                 ]
             });
-            show_allstudent();
+            showAllStudent();
 
 
             $("#studentForm").on('submit', function (e) {
@@ -174,7 +174,7 @@
                     }).done(function () {
                         var table = $('#myTable').DataTable();
                         table.clear();
-                        show_allstudent();
+                        showAllStudent();
                         document.getElementById('studentForm').classList.add('visible');
 
                         // var table = $('#myTable').DataTable();

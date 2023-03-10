@@ -23,7 +23,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "/registration").permitAll()
+                .antMatchers("/", "/registration", "/error").permitAll()
+                .antMatchers("/Party", "/Student").hasAnyAuthority("USER")
+                .antMatchers("/Subject", "/Teacher").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -32,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")//глобальная константа!
                 .and()
                 .logout()
-                .permitAll();
+                .permitAll().and().exceptionHandling().accessDeniedPage("/error");
     }
 
     @Override
