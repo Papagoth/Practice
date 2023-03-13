@@ -9,7 +9,6 @@
 </head>
 <body>
 <div class="size1">
-
     <div class="nav_color">
         <div class="size2">
             <div class="header-margin">
@@ -21,14 +20,11 @@
             </div>
         </div>
     </div>
-
     <div class="size2">
-
         <form:form action="${pageContext.request.contextPath}/registration" method="post" class="form"
                    modelAttribute="userForm">
             <div>
                 <input type="text" name="username" path="username" id="username" placeholder="Введите логин"/>
-
                     ${usernameError}
             </div>
             <div>

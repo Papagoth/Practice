@@ -17,9 +17,6 @@
     <jsp:include page="header.jsp"/>
     <div class="size2">
         <h3>Добро пожаловать!</h3>
-        <form:form method="POST" action="/logout">
-            <button type="submit">Logout</button>
-        </form:form>
     </div>
     <jsp:include page="footer.jsp"/>
 </div>
