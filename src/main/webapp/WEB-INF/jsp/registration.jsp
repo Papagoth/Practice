@@ -32,13 +32,13 @@
                 <errors path="password"></errors>
                     ${passwordError}
                 <div>
-                    <select name="role" id="role">
+                    <select name="role" id="role" class="select-css">
                         <option value='USER'>Ученик</option>
                         <option value='ADMIN'>Учитель</option>
                     </select>
                 </div>
             </div>
-            <button type="submit">Добавить</button>
+            <button type="submit" class="btn">Добавить</button>
         </form:form>
         <a class="ssilka" href="<c:url value="/login"/>"> Назад</a>
     </div>

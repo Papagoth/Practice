@@ -195,7 +195,7 @@ th {
 
 .dropdown:hover .dropdown-content {
     display: block;
-    
+
 }
 
 .dropdown:hover .dropbtn {
@@ -332,7 +332,7 @@ label {
     box-sizing: border-box;
     border: 1px solid #aaa;
     box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
-    border-radius: .5em;
+    border-radius: .3em;
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
@@ -560,4 +560,61 @@ input {
 
 .logbtn:hover {
     color: black;
+}
+
+.btn {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 5px;
+    margin: 0 5px 5px 0;
+    outline: none;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    height: 46px;
+    line-height: 46px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #444;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgb(65 132 144 / 10%), 0 1px 3px rgb(0 0 0 / 8%);
+    cursor: pointer;
+    user-select: none;
+    appearance: none;
+    touch-action: manipulation;
+    vertical-align: top;
+    transition: box-shadow 0.2s;
+}
+
+.btn:focus-visible {
+    border: 1px solid #4c51f9;
+    outline: none;
+}
+
+.btn:hover {
+    transition: all 0.2s;
+    box-shadow: 0 7px 14px rgb(65 132 144 / 10%), 0 3px 6px rgb(0 0 0 / 8%);
+}
+
+.btn:active {
+    background-color: #808080;
+}
+
+.btn:disabled {
+    background-color: #eee;
+    border-color: #eee;
+    color: #444;
+    cursor: not-allowed;
+}
+
+.selecter {
+    font: inherit;
+    letter-spacing: inherit;
+    word-spacing: inherit;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    /* рамка и отступы */
+    border: 0.1em solid;
+    padding: 0 0.2em;
 }

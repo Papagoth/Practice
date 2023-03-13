@@ -47,7 +47,7 @@
                     Вы уже авторизированы.
                 </p>
             </c:if>
-            <button type="submit">Авторизироваться</button>
+            <button type="submit" class="btn">Авторизироваться</button>
         </form:form>
         <a class="ssilka" href="<c:url value="/registration"/>"> Регистрация</a>
     </div>
