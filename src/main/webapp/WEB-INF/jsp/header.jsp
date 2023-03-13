@@ -23,7 +23,7 @@
                         <button class="dropbtn">${pageContext.request.userPrincipal.name}</button>
                         <div class="dropdown-content">
                             <form:form method="POST" action="/logout">
-                                <button type="submit">Выйти из аккаунта</button>
+                                <button type="submit" class="logbtn">Выйти из аккаунта</button>
                             </form:form>
 
                         </div>

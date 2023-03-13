@@ -195,6 +195,7 @@ th {
 
 .dropdown:hover .dropdown-content {
     display: block;
+    
 }
 
 .dropdown:hover .dropbtn {
@@ -547,4 +548,16 @@ input {
 .dropdown:hover .dropbtn {
     background-color: #555555;
 
+}
+
+.logbtn {
+    background-color: #555555;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.logbtn:hover {
+    color: black;
 }
