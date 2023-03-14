@@ -24,6 +24,52 @@
     <script>
 
 
+        $(function () {
+            $('.who').bind("change keyup input click", function () {
+                if (this.value.length >= 2) {
+                    $.ajax({
+                        url: "/subjectFind/" + this.value, //Путь к обработчику
+                        type: 'get',
+                        cache: false,
+                        success: function (data) {
+                            $(".search_result").html(data).fadeIn(); //Выводим полученые данные в списке
+                            for (let i = 0; i < data.length; i++) {
+                                //$('ul').append('<li id="' + data[i].name + "' value='" + JSON.stringify(data[i]) + "'>" + data[i].name + "</li>");
+                                $('.search_result').append("<li data-attr='" + JSON.stringify(data[i]) + "'> " + data[i].name + "</li>");
+                            }
+                        }
+                    })
+                }
+            })
+
+            $(".search_result").hover(function () {
+                $(".who").blur(); //Убираем фокус с input
+            })
+
+//При выборе результата поиска, прячем список и заносим выбранный результат в input
+            $(".search_result").on("click", "li", function () {
+                //s_user = $(this).text();
+                //$(".who").val(s_user).attr('disabled', 'disabled'); //деактивируем input, если нужно
+                $(".who").text($("#" + $(this).text().trim()).attr('data-attr'));
+                $('#subjects option:contains("' + $(this).text().trim() + '")').prop('selected', true);
+                if ($("#" + $(this).text().trim() + "").length) {
+                } else {
+                    $('#resulter').append("<li id='" + $(this).text().trim() + "'> " + $(this).text().trim() + "</li>");
+                }
+                $(".who").val($(this).text().trim())
+                $(".search_result").fadeOut();
+            })
+
+
+            $("#resulter").on("click", "li", function () {
+                $('#subjects option:contains("' + $(this).text().trim() + '")').prop('selected', false);
+                $(this).remove();
+            })
+
+
+        })
+
+
         $.validator.addMethod('symbols', function (value, element) {
             return value.match(new RegExp("^" + "[А-Яа-яЁё ]" + "+$"));
         }, "Здесь должны быть только русские символы");
@@ -60,15 +106,16 @@
 
         function showTeacher(id) {
             $.get('/getOneTeacher/' + id, function (data) {
+                $("#subjects").val('');
+                $('li').remove();
                 $("#id").val(data.id);
-                $("#subjects").multiSelect('deselect_all');
                 $("#speciality").val(data.speciality);
                 $("#borndate").val(data.borndate);
                 $("#fio").val(data.fio);
                 for (let i = 0; i < data.subjects.length; i++) {
                     //$('#subjects').prepend('<option  value=' + JSON.stringify(data.subjects[i]) + ' selected = "selected">' + data.subjects[i].name + '</option>');
-                    $('#subjects option:contains("' + data.subjects[i].name + '")').prop('selected', true);
-                    $('#subjects').multiSelect('select', data.subjects[i].name);
+                    $('#subjects option:contains("' + data.subjects[i].name.trim() + '")').prop('selected', true);
+                    $('#resulter').append("<li id='" + data.subjects[i].name.trim() + "'> " + data.subjects[i].name.trim() + "</li>");
                     //console.log($('#subjects option:contains("' + data.subjects[i].name + '")').attr('data-attr'));
                 }
                 document.getElementById('teacherForm').removeAttribute("class");
@@ -76,11 +123,12 @@
         }
 
         function send() {
+            $('li').remove();
             $("#id").val('');
             $("#fio").val('');
             $("#speciality").val('');
             $("#borndate").val('');
-            $("#subjects").multiSelect('deselect_all');
+            $("#subjects").val('');
             document.getElementById('teacherForm').removeAttribute("class");
         }
 
@@ -89,7 +137,6 @@
         }
 
         $(document).ready(function () {
-            $("#subjects").multiSelect();
             var table = $('#myTable').DataTable({
                 "columns": [
                     {
@@ -370,14 +417,15 @@
                 let str = '[';
                 for (let i = 0; i < $('#subjects').val().length; i++) {
                     if (i == $('#subjects').val().length - 1) {
-                        str += $("#" + $('#subjects').val()[i] + "").attr('data-attr');
+
+                        str += $('#subjects option:contains("' + $('#subjects').val()[i] + '")').attr('data-attr');
                     } else {
-                        str += $("#" + $('#subjects').val()[i] + "").attr('data-attr') + ',';
+
+                        str += $('#subjects option:contains("' + $('#subjects').val()[i] + '")').attr('data-attr') + ',';
+
                     }
                 }
                 str += ']';
-
-
                 if ($("#teacherForm").valid()) {
 
                     $.ajax({
@@ -518,23 +566,36 @@
                 <div><label class="subject_label">Дата рождения</label><input type='text' name='borndate'
                                                                               id='borndate'/></div>
                 <div><label class="subject_label">ФИО</label><input type='text' name='fio' id='fio'/></div>
-                <select name="subjects" multiple="multiple" id="subjects">
+                <select name="subjects" multiple="multiple" id="subjects" class="visible">
                     <c:forEach items='${subjectList}' var='subjects'>
-                        <option id='${subjects.name}' value='${subjects.name}'
+                        <option value='${subjects.name}'
                                 data-attr='${subjects}'>${subjects.name}</option>
                     </c:forEach>
                 </select>
+
                 <div>
-                    <input ENGINE="text" name="referal" placeholder="Живой поиск" value="" class="who"
-                           autocomplete="off">
-                    <ul class="search_result"></ul>
+                    <div>
+                        <input ENGINE="text" name="referal" placeholder="Живой поиск" value="" class="who"
+                               autocomplete="off">
+                        <ul class="search_result"></ul>
+                    </div>
+
+                    <div class="result_div">
+                        <p>Выбранные элементы</p>
+                        <ul id="resulter">
+                        </ul>
+                    </div>
+
                 </div>
 
-                <img class="icon" onclick="hide()" alt="logo_1" src="/resources/image/back.png">
 
-                <button type="button " class="img_button"><img class="icon" alt="logo_1"
-                                                               src="/resources/image/disc.png">
-                </button>
+                <div>
+                    <img class="icon" onclick="hide()" alt="logo_1" src="/resources/image/back.png">
+
+                    <button type="button " class="img_button"><img class="icon" alt="logo_1"
+                                                                   src="/resources/image/disc.png">
+                    </button>
+                </div>
             </form>
 
 

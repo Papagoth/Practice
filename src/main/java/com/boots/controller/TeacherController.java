@@ -55,6 +55,7 @@ public class TeacherController {
     public ResponseEntity<String> addTeacher(@RequestBody Teacher teacher) {
         try {
             teacherService.save(teacher);
+            //System.out.println(teacher);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

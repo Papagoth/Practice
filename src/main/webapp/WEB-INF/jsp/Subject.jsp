@@ -460,17 +460,17 @@
 
             <button type="button" onclick="send()" class="img_button"><img class="icon" alt="logo_1"
                                                                            src="/resources/image/plus.png"></button>
+            <table id='myTable'>
+                <thead>
+                <th>Название предмета</th>
+                <th>Название группы</th>
+                <th>Время обучения</th>
+                <th>Кнопка изменения</th>
+                <th>Кнопка удаления</th>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
-        <table id='myTable'>
-            <thead>
-            <th>Название предмета</th>
-            <th>Название группы</th>
-            <th>Время обучения</th>
-            <th>Кнопка изменения</th>
-            <th>Кнопка удаления</th>
-            </thead>
-            <tbody></tbody>
-        </table>
     </div>
     <div class=" size2">
 

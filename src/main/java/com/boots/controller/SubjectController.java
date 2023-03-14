@@ -55,5 +55,10 @@ public class SubjectController {
         return new ResponseEntity<>(subjectService.findSubjectsById(id), HttpStatus.OK);
     }
 
+    @GetMapping("/subjectFind/{name}")
+    public ResponseEntity<List<Subject>> findSubject(@PathVariable("name") String name) {
+        return new ResponseEntity<>(subjectService.findAllByNameContainingOrderByName(name), HttpStatus.OK);
+    }
+
 
 }

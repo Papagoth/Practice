@@ -618,3 +618,31 @@ input {
     border: 0.1em solid;
     padding: 0 0.2em;
 }
+
+#resulter {
+    background: #FFF;
+    border: 1px #ccc solid;
+    width: 150px;
+    border-radius: 3px;
+    max-height: 100px;
+    overflow-y: scroll;
+}
+
+#resulter li {
+    list-style: none;
+    padding: 5px 10px;
+    margin: 0 0 0 -40px;
+    color: #0896D3;
+    border-bottom: 1px #ccc solid;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#resulter li:hover {
+    background: #F9FF00;
+}
+
+.result_div {
+    margin-left: auto;
+    margin-right: auto;
+}

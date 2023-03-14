@@ -433,17 +433,17 @@
             </form>
             <button type="button" onclick="send()" class="img_button"><img class="icon" alt="logo_1"
                                                                            src="/resources/image/plus.png"></button>
-        </div>
-        <table id='myTable'>
-            <thead>
-            <th>Название группы</th>
-            <th>Название курса</th>
-            <th>Кнопка изменения</th>
-            <th>Кнопка удаления</th>
-            </thead>
-            <tbody></tbody>
+            <table id='myTable'>
+                <thead>
+                <th>Название группы</th>
+                <th>Название курса</th>
+                <th>Кнопка изменения</th>
+                <th>Кнопка удаления</th>
+                </thead>
+                <tbody></tbody>
 
-        </table>
+            </table>
+        </div>
     </div>
     <div class=" size2">
     </div>

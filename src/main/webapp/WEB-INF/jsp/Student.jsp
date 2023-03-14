@@ -525,18 +525,18 @@
 
             <button type="button" onclick="send()" class="img_button"><img class="icon" alt="logo_1"
                                                                            src="/resources/image/plus.png"></button>
+            <table id='myTable'>
+                <thead>
+                <th>ФИО</th>
+                <th>Название группы</th>
+                <th>Номер студ билета</th>
+                <th>Дата рождения</th>
+                <th>Кнопка изменения</th>
+                <th>Кнопка удаления</th>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
-        <table id='myTable'>
-            <thead>
-            <th>ФИО</th>
-            <th>Название группы</th>
-            <th>Номер студ билета</th>
-            <th>Дата рождения</th>
-            <th>Кнопка изменения</th>
-            <th>Кнопка удаления</th>
-            </thead>
-            <tbody></tbody>
-        </table>
     </div>
     <div class=" size2">
     </div>
